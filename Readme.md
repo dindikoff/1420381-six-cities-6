@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Stanislau Dzindzikau](https://up.htmlacademy.ru/react/6/user/1420381).
-* Наставник: `Неизвестно`.
+* Наставник: [Антон Вахрушев](https://htmlacademy.ru/profile/id65417).
 
 ---
 
