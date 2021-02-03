@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import MainPage from '../main-page/main-page';
 
 const App = (props) => {
@@ -11,7 +11,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  cards: propTypes.array
+  cards: PropTypes.array
 };
 
 export default App;

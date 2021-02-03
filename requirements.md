@@ -4,7 +4,7 @@
 
 ```
 npm i <package>@<version> -E
-npm i react@16.12 -E
+npm i react@16.12 -E§
 ``` 
 
 ## dependencies

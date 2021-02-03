@@ -1,8 +1,6 @@
 import React from 'react';
-import propTypes from 'prop-types';
-import Card from '../card/card';
-
-import {nanoid} from 'nanoid';
+import PropTypes from 'prop-types';
+import Card, {CardType} from '../card/card';
 
 const MainPage = (props) => {
   const {cards} = props;
@@ -95,9 +93,9 @@ const MainPage = (props) => {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  {cards.map((cardItem) => {
+                  {cards.map((card) => {
                     return (
-                      <Card card={cardItem} key={nanoid()} />
+                      <Card card={card} key={card.id} />
                     );
                   })}
                 </div>
@@ -114,7 +112,7 @@ const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
-  cards: propTypes.array
+  cards: PropTypes.arrayOf(CardType).isRequired,
 };
 
 export default MainPage;
