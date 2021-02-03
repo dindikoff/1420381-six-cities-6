@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const RATING_STAR_PERCENT = 20;
+
 export const RoomType = {
   apartment: `apartment`,
   room: `room`,
   house: `house`,
   hotel: `hotel`
+};
+
+const typeToText = {
+  apartment: `Apartment`,
+  room: `Private Room`,
+  house: `House`,
+  hotel: `Hotel`
 };
 
 const Card = ({card}) => {
@@ -45,19 +54,19 @@ const Card = ({card}) => {
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{isFavorite ? `In bookmarks` : `To bookmarks`}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: rating * 20}}></span>
+            <span style={{width: rating * RATING_STAR_PERCENT}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <a href="#">{name}</a>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{typeToText[type]}</p>
       </div>
     </article>
   );

@@ -93,11 +93,7 @@ const MainPage = (props) => {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  {cards.map((card) => {
-                    return (
-                      <Card card={card} key={card.id} />
-                    );
-                  })}
+                  {cards.map((card) => <Card card={card} key={card.id} />)}
                 </div>
               </section>
               <div className="cities__right-section">
