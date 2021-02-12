@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card, {CardType} from '../card/card';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
+import CardList from '../card-list/card-list';
+import {CardType} from '../card/card';
+import {CARD_TYPE} from "../../const";
 
 const MainPage = (props) => {
   const {cards} = props;
@@ -33,9 +35,10 @@ const MainPage = (props) => {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {cards.map((card) => <Card card={card} key={card.id} />)}
-                </div>
+                <CardList cards={cards} className={CARD_TYPE.CITIES.CLASS_NAME}
+                  cardClassName={CARD_TYPE.CITIES.CARD_CLASS_NAME} cardClassWrapper={CARD_TYPE.CITIES.CLASS_WRAPPER}
+                  cardSize={CARD_TYPE.CITIES.SIZE}
+                />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map" />
