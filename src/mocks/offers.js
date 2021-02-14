@@ -1,12 +1,13 @@
-import {RoomType} from '../components/card/card';
+import {RoomType} from '../const';
 import {FEATURES} from '../const';
+import {comments} from './comment';
 
-export const cards = [
+export const offers = [
   {
     id: 1,
     imagePreview: `img/apartment-01.jpg`,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`,
-      `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+      `img/apartment-03.jpg`, `img/studio-01.jpg`],
     price: 120,
     rating: 4,
     name: `Beautiful & luxurious apartment at great location`,
@@ -18,6 +19,7 @@ export const cards = [
     isPremium: false,
     isFavorite: false,
     city: `Amsterdam`,
+    comments,
     host: {
       avatar: `avatar-max.jpg`,
       id: 3,
@@ -29,7 +31,7 @@ export const cards = [
     id: 2,
     imagePreview: `img/room.jpg`,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`,
-      `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+      `img/apartment-03.jpg`, `img/studio-01.jpg`],
     price: 80,
     rating: 4,
     name: `Wood and stone place`,
@@ -41,6 +43,7 @@ export const cards = [
     isPremium: false,
     isFavorite: true,
     city: `Irvine`,
+    comments,
     host: {
       avatar: `avatar-angelina.jpg`,
       id: 4,
@@ -52,7 +55,7 @@ export const cards = [
     id: 3,
     imagePreview: `img/apartment-02.jpg`,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`,
-      `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+      `img/apartment-03.jpg`, `img/studio-01.jpg`],
     price: 132,
     rating: 4,
     name: `Canal View Prinsengracht`,
@@ -64,6 +67,7 @@ export const cards = [
     isPremium: false,
     isFavorite: true,
     city: `Amsterdam`,
+    comments,
     host: {
       avatar: `avatar-angelina.jpg`,
       id: 5,
@@ -75,7 +79,7 @@ export const cards = [
     id: 4,
     imagePreview: `img/apartment-03.jpg`,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`,
-      `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+      `img/apartment-03.jpg`, `img/studio-01.jpg`],
     price: 180,
     rating: 5,
     name: `Nice, cozy, warm big bed apartment`,
@@ -87,6 +91,7 @@ export const cards = [
     isPremium: true,
     isFavorite: false,
     city: `Los Angeles`,
+    comments,
     host: {
       avatar: `avatar-max.jpg`,
       id: 6,
@@ -98,7 +103,7 @@ export const cards = [
     id: 5,
     imagePreview: `img/room.jpg`,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`,
-      `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+      `img/apartment-03.jpg`, `img/studio-01.jpg`],
     price: 80,
     rating: 4,
     name: `Wood and stone place`,
@@ -110,6 +115,7 @@ export const cards = [
     isPremium: false,
     isFavorite: true,
     city: `Irvine`,
+    comments,
     host: {
       avatar: `avatar-angelina.jpg`,
       id: 7,

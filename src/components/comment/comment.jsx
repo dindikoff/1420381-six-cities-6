@@ -22,7 +22,7 @@ const Comment = ({comment}) => {
           </div>
         </div>
         <p className="reviews__text">
-          {comment.comment}
+          {comment.text}
         </p>
         <time className="reviews__time" dateTime={dayjs(comment.date).format(`YYYY-MM-DD`)}>{dayjs(comment.date).format(`MMM YYYY`)}</time>
       </div>
@@ -31,8 +31,8 @@ const Comment = ({comment}) => {
 };
 
 export const CommentType = PropTypes.exact({
-  comment: PropTypes.string.isRequired,
-  date: PropTypes.object.isRequired,
+  text: PropTypes.string.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
   id: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   user: PropTypes.exact({
@@ -44,7 +44,7 @@ export const CommentType = PropTypes.exact({
 });
 
 Comment.propTypes = {
-  comment: PropTypes.object.isRequired,
+  comment: CommentType.isRequired,
 
 };
 

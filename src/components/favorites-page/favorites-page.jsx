@@ -2,12 +2,11 @@ import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import CardList from "../card-list/card-list";
-import {CARD_TYPE} from "../../const";
 import PropTypes from "prop-types";
-import {CardType} from "../card/card";
+import {OfferType} from "../../typings/typings";
 
-const FavoritesPage = ({cards}) => {
-  const favoriteCards = cards.filter((card) => {
+const FavoritesPage = ({offers}) => {
+  const favoriteCards = offers.filter((card) => {
     return card.isFavorite === true;
   });
 
@@ -29,10 +28,9 @@ const FavoritesPage = ({cards}) => {
                 </div>
                 <div className="favorites__places">
                   <CardList cards={favoriteCards}
-                    className={CARD_TYPE.FAVORITE.CLASS_NAME}
-                    cardClassName={CARD_TYPE.FAVORITE.CARD_CLASS_NAME}
-                    cardClassWrapper={CARD_TYPE.FAVORITE.CLASS_WRAPPER}
-                    cardSize={CARD_TYPE.FAVORITE.SIZE}
+                    cardClassName={`favorites__card`}
+                    cardImageWrapperClassName={`favorites__image-wrapper`}
+                    cardImageSize={{width: `150px`, height: `110px`}}
                   />
                 </div>
               </li>
@@ -47,7 +45,7 @@ const FavoritesPage = ({cards}) => {
 };
 
 FavoritesPage.propTypes = {
-  cards: PropTypes.arrayOf(CardType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 export default FavoritesPage;

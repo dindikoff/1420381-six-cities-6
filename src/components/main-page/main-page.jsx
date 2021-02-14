@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
-import {CardType} from '../card/card';
-import {CARD_TYPE} from "../../const";
+import {OfferType} from '../../typings/typings';
 
 const MainPage = (props) => {
-  const {cards} = props;
+  const {offers} = props;
   return (
     <React.Fragment>
       <div className="page page--gray page--main">
@@ -35,9 +34,9 @@ const MainPage = (props) => {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <CardList cards={cards} className={CARD_TYPE.CITIES.CLASS_NAME}
-                  cardClassName={CARD_TYPE.CITIES.CARD_CLASS_NAME} cardClassWrapper={CARD_TYPE.CITIES.CLASS_WRAPPER}
-                  cardSize={CARD_TYPE.CITIES.SIZE}
+                <CardList cards={offers} className={`cities__places-list`}
+                  cardClassName={`cities__place-card`} cardImageWrapperClassName={`cities__image-wrapper`}
+                  cardImageSize={{width: `260px`, height: `200px`}}
                 />
               </section>
               <div className="cities__right-section">
@@ -52,7 +51,7 @@ const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
-  cards: PropTypes.arrayOf(CardType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 export default MainPage;
