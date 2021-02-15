@@ -1,44 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
+import {OfferType} from '../../typings/offer';
 
-const RATING_STAR_PERCENT = 20;
-
-export const RoomType = {
-  apartment: `apartment`,
-  room: `room`,
-  house: `house`,
-  hotel: `hotel`
-};
-
-const typeToText = {
-  apartment: `Apartment`,
-  room: `Private Room`,
-  house: `House`,
-  hotel: `Hotel`
-};
-
-const Card = ({card}) => {
+const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName, cardImageSize}) => {
   const {
-    name, image,
+    name, imagePreview,
     price, type,
     isPremium, rating,
-    isFavorite, id
+    isFavorite, id,
   } = card;
 
+  const handleCardMouseEnter = () => {
+    onActivityChange(id);
+  };
+
+  const handleCardMouseLeave = () => {
+    onActivityChange(``);
+  };
+
   return (
-    <article className="cities__place-card place-card">
+    <article className={`${cardClassName} place-card`} onMouseEnter={handleCardMouseEnter} onMouseLeave={handleCardMouseLeave}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={cardImageWrapperClassName + ` place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={image}
+          <img className="place-card__image" src={imagePreview}
             style={{
-              width: `260`,
-              height: `200`
+              width: cardImageSize.width,
+              height: cardImageSize.height
             }} alt="Place image">
           </img>
         </a>
@@ -60,32 +54,28 @@ const Card = ({card}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: rating * RATING_STAR_PERCENT}}/>
+            <span style={{width: rating * RATING_STAR_PERCENT + `%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/` + id}>{name}</Link>
+          <Link to={`/offer/${id}`}>{name}</Link>
         </h2>
-        <p className="place-card__type">{typeToText[type]}</p>
+        <p className="place-card__type">{ROOM_TYPE_TO_ROOM_NAME[type]}</p>
       </div>
     </article>
   );
 };
 
-export const CardType = PropTypes.exact({
-  id: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([RoomType.apartment, RoomType.hotel, RoomType.house, RoomType.room]).isRequired,
-  isPremium: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-});
-
 Card.propTypes = {
-  card: CardType.isRequired
+  card: OfferType.isRequired,
+  onActivityChange: PropTypes.func.isRequired,
+  cardClassName: PropTypes.string.isRequired,
+  cardImageWrapperClassName: PropTypes.string.isRequired,
+  cardImageSize: PropTypes.exact({
+    width: PropTypes.string.isRequired,
+    height: PropTypes.string.isRequired
+  })
 };
 
 export default Card;
