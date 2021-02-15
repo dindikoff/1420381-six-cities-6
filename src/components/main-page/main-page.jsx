@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
-import {OfferType} from '../../typings/typings';
+import {OfferType} from '../../typings/offer';
 
 const MainPage = (props) => {
   const {offers} = props;

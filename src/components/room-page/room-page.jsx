@@ -5,11 +5,11 @@ import CardList from '../card-list/card-list';
 import Page404 from '../page404/page404';
 
 import PropTypes from 'prop-types';
-import {RATING_STAR_PERCENT, typeToText} from '../../const';
-import {OfferType} from '../../typings/typings';
+import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
+import {OfferType} from '../../typings/offer';
 
-const RoomPage = ({card, nearestPlaces}) => {
-  if (!card) {
+const RoomPage = ({offer, nearestPlaces}) => {
+  if (!offer) {
     return <Page404 />;
   }
   return (
@@ -19,7 +19,7 @@ const RoomPage = ({card, nearestPlaces}) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {card.images.map((image) => {
+              {offer.images.map((image) => {
                 return (
                   <div className="property__image-wrapper" key={image}>
                     <img className="property__image" src={image} alt="Photo studio" />
@@ -30,49 +30,49 @@ const RoomPage = ({card, nearestPlaces}) => {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {card.isPremium ?
+              {offer.isPremium ?
                 <div className="property__mark">
                   <span>Premium</span>
                 </div> : ``}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {card.name}
+                  {offer.name}
                 </h1>
-                <button className={card.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`} type="button">
+                <button className={offer.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`} type="button">
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
-                  <span className="visually-hidden">{card.isFavorite ? `In bookmarks` : `To bookmarks`}</span>
+                  <span className="visually-hidden">{offer.isFavorite ? `In bookmarks` : `To bookmarks`}</span>
                 </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: card.rating * RATING_STAR_PERCENT + `%`}} />
+                  <span style={{width: offer.rating * RATING_STAR_PERCENT + `%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{card.rating}</span>
+                <span className="property__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {typeToText[card.type]}
+                  {ROOM_TYPE_TO_ROOM_NAME[offer.type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {card.roomCount} Bedrooms
+                  {offer.roomCount} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {card.roomCapacity} adults
+                  Max {offer.roomCapacity} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€{card.price}</b>
+                <b className="property__price-value">€{offer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
-              {card.features.length !== 0 ?
+              {offer.features.length !== 0 ?
                 <div className="property__inside">
                   <h2 className="property__inside-title">`What&apos;s inside`</h2>
                   <ul className="property__inside-list">
 
-                    {card.features.map((feature) => {
+                    {offer.features.map((feature) => {
                       return (
                         <li key={feature} className="property__inside-item">
                           {feature}
@@ -87,22 +87,22 @@ const RoomPage = ({card, nearestPlaces}) => {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={`img/` + card.host.avatar} width={74} height={74} alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={`img/` + offer.host.avatar} width={74} height={74} alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {card.host.name}
+                    {offer.host.name}
                   </span>
                   <span className="property__user-status">
-                    {card.host.isPro ? `Pro` : ``}
+                    {offer.host.isPro ? `Pro` : ``}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {card.description}
+                    {offer.description}
                   </p>
                 </div>
               </div>
-              <CommentsList comments={card.comments}/>
+              <CommentsList comments={offer.comments}/>
             </div>
           </div>
           <section className="property__map map" />
@@ -125,6 +125,6 @@ const RoomPage = ({card, nearestPlaces}) => {
 export default RoomPage;
 
 RoomPage.propTypes = {
-  card: OfferType,
+  offer: OfferType,
   nearestPlaces: PropTypes.arrayOf(OfferType),
 };

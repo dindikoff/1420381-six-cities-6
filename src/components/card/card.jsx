@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {RATING_STAR_PERCENT, typeToText} from '../../const';
-import {OfferType} from '../../typings/typings';
+import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
+import {OfferType} from '../../typings/offer';
 
 const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName, cardImageSize}) => {
   const {
@@ -12,16 +12,16 @@ const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName,
     isFavorite, id,
   } = card;
 
-  const handleMouseActive = () => {
+  const handleCardMouseEnter = () => {
     onActivityChange(id);
   };
 
-  const handleMouseLeave = () => {
+  const handleCardMouseLeave = () => {
     onActivityChange(``);
   };
 
   return (
-    <article className={`${cardClassName} place-card`} onMouseEnter={handleMouseActive} onMouseLeave={handleMouseLeave}>
+    <article className={`${cardClassName} place-card`} onMouseEnter={handleCardMouseEnter} onMouseLeave={handleCardMouseLeave}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -59,9 +59,9 @@ const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName,
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/` + id} >{name}</Link>
+          <Link to={`/offer/${id}`}>{name}</Link>
         </h2>
-        <p className="place-card__type">{typeToText[type]}</p>
+        <p className="place-card__type">{ROOM_TYPE_TO_ROOM_NAME[type]}</p>
       </div>
     </article>
   );

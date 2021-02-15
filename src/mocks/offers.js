@@ -1,4 +1,4 @@
-import {RoomType} from '../const';
+import {RoomType} from '../typings/offer';
 import {FEATURES} from '../const';
 import {comments} from './comment';
 

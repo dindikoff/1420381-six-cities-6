@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
-import {OfferType} from '../../typings/typings';
+import {OfferType} from '../../typings/offer';
 
 const CardList = ({cards, className, cardClassName, cardImageWrapperClassName, cardImageSize}) => {
-  const [activeCard, setActiveCard] = useState(``);
+  const [, setState] = useState({active: ``});
 
   const handleActivityChange = (id) => {
-    setActiveCard({active: id});
+    setState({active: id});
   };
 
   return (
     <div className={className + ` places__list tabs__content`}>
-      {cards.map((card) => <Card card={card} key={card.id} onActivityChange={handleActivityChange} id={activeCard} cardClassName={cardClassName} cardImageWrapperClassName={cardImageWrapperClassName} cardImageSize={cardImageSize}/>)}
+      {cards.map((card) => <Card card={card} key={card.id} onActivityChange={handleActivityChange} cardClassName={cardClassName} cardImageWrapperClassName={cardImageWrapperClassName} cardImageSize={cardImageSize}/>)}
     </div>
   );
 };

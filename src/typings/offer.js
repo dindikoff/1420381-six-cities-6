@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
-import {RoomType} from '../const';
 import {CommentType} from '../components/comment/comment';
+
+export const RoomType = {
+  apartment: `apartment`,
+  room: `room`,
+  house: `house`,
+  hotel: `hotel`
+};
 
 export const OfferType = PropTypes.exact({
   id: PropTypes.number.isRequired,

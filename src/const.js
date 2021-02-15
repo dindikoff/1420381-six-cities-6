@@ -4,14 +4,7 @@ export const FEATURES = [`Heating`, `Kitchen`,
   `Cable TV`, `Washing machine`,
   `Coffee machine`, `Dishwasher`];
 
-export const RoomType = {
-  apartment: `apartment`,
-  room: `room`,
-  house: `house`,
-  hotel: `hotel`
-};
-
-export const typeToText = {
+export const ROOM_TYPE_TO_ROOM_NAME = {
   apartment: `Apartment`,
   room: `Private Room`,
   house: `House`,

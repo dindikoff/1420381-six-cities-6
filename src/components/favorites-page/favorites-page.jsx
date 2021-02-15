@@ -3,7 +3,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import CardList from "../card-list/card-list";
 import PropTypes from "prop-types";
-import {OfferType} from "../../typings/typings";
+import {OfferType} from "../../typings/offer";
 
 const FavoritesPage = ({offers}) => {
   const favoriteCards = offers.filter((card) => {

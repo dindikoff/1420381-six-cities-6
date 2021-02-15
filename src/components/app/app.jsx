@@ -6,10 +6,9 @@ import LoginPage from '../login-page/login-page';
 import RoomPage from '../room-page/room-page';
 import Page404 from '../page404/page404';
 
-import {OfferType} from '../../typings/typings';
-import {CommentType} from '../comment/comment';
+import {OfferType} from '../../typings/offer';
 import PropTypes from 'prop-types';
-import {getMatchedCard, getNearestCards} from '../utils/utils';
+import {getMatchedOffer, getNearestOffers} from '../utils/utils';
 
 const App = (props) => {
   const {offers} = props;
@@ -27,8 +26,8 @@ const App = (props) => {
           <LoginPage />
         </Route>
         <Route exact path="/offer/:id" render={({match}) => (
-          <RoomPage card={getMatchedCard(offers, match)}
-            nearestPlaces={getNearestCards(offers)}/>
+          <RoomPage offer={getMatchedOffer(offers, match)}
+            nearestPlaces={getNearestOffers(offers)}/>
         )}>
         </Route>
         <Route>
@@ -41,7 +40,6 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
-  comments: PropTypes.arrayOf(CommentType).isRequired
 };
 
 export default App;

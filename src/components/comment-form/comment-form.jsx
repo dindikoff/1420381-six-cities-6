@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 
 const CommentForm = () => {
-  const [comment, setComment] = useState({
+  const [state, setState] = useState({
     rating: 0,
     text: ``
   });
 
   const handleRatingChange = (evt) => {
-    setComment({...comment, rating: evt.target.value});
+    setState({...state, rating: evt.target.value});
   };
 
   const handleTextChange = (evt) => {
-    setComment({...comment, text: evt.target.value});
+    setState({...state, text: evt.target.value});
   };
 
   return (

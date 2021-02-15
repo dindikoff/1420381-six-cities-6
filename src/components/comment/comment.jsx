@@ -45,7 +45,6 @@ export const CommentType = PropTypes.exact({
 
 Comment.propTypes = {
   comment: CommentType.isRequired,
-
 };
 
 export default Comment;
