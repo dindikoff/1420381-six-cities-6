@@ -25,6 +25,11 @@ export const offers = [
       id: 3,
       isPro: false,
       name: `Angelina`
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.673877537499948,
+      zoom: 8
     }
   },
   {
@@ -49,6 +54,11 @@ export const offers = [
       id: 4,
       isPro: true,
       name: `Babalina`
+    },
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 8
     }
   },
   {
@@ -73,6 +83,11 @@ export const offers = [
       id: 5,
       isPro: true,
       name: `Alexandra`
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8
     }
   },
   {
@@ -97,6 +112,11 @@ export const offers = [
       id: 6,
       isPro: true,
       name: `Stanis`
+    },
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8
     }
   },
   {
@@ -121,6 +141,11 @@ export const offers = [
       id: 7,
       isPro: false,
       name: `denis`
+    },
+    location: {
+      latitude: 52.4009553943508,
+      longitude: 4.939309666406198,
+      zoom: 8
     }
   },
 ];
