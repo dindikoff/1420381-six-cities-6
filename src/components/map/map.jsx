@@ -2,11 +2,11 @@ import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 
-import {LocationType} from '../../typings/offer';
+import {OfferType} from '../../typings/offer';
 
 import "leaflet/dist/leaflet.css";
 
-const Map = ({cityCords, points}) => {
+const Map = ({cityCords, offers}) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -22,8 +22,7 @@ const Map = ({cityCords, points}) => {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
   })
   .addTo(mapRef.current);
-
-    points.forEach((point) => {
+    offers.forEach((offer) => {
       const icon = leaflet.icon({
         iconUrl: `img/pin.svg`,
         iconSize: [30, 30]
@@ -31,8 +30,8 @@ const Map = ({cityCords, points}) => {
 
       leaflet
         .marker({
-          lat: point.latitude,
-          lng: point.longitude
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         },
         {icon})
         .addTo(mapRef.current);
@@ -44,13 +43,15 @@ const Map = ({cityCords, points}) => {
   }, []);
 
   return (
-    <div id="map" style={{height: `100%`}} ref={mapRef}></div>
+    <section className="cities__map map">
+      <div id="map" style={{height: `100%`}}></div>
+    </section>
   );
 };
 
 Map.propTypes = {
-  cityCords: PropTypes.array.isRequired,
-  points: PropTypes.arrayOf(LocationType).isRequired,
+  cityCords: PropTypes.arrayOf(PropTypes.number).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 export default Map;
