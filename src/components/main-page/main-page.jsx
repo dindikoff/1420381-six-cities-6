@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
+import Map from '../map/map';
 import {OfferType} from '../../typings/offer';
+import {CITY_CORDS} from '../../const';
 
 const MainPage = (props) => {
   const {offers} = props;
+
   return (
     <React.Fragment>
       <div className="page page--gray page--main">
@@ -40,7 +43,7 @@ const MainPage = (props) => {
                 />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map" />
+                <Map cityCords={CITY_CORDS.amsterdam} offers={offers}/>
               </div>
             </div>
           </div>

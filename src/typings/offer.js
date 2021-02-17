@@ -8,6 +8,12 @@ export const RoomType = {
   hotel: `hotel`
 };
 
+export const LocationType = PropTypes.exact({
+  latitude: PropTypes.number.isRequired,
+  longitude: PropTypes.number.isRequired,
+  zoom: PropTypes.number.isRequired,
+});
+
 export const OfferType = PropTypes.exact({
   id: PropTypes.number.isRequired,
   imagePreview: PropTypes.string.isRequired,
@@ -29,5 +35,7 @@ export const OfferType = PropTypes.exact({
     id: PropTypes.number.isRequired,
     isPro: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired
-  })
+  }),
+  location: LocationType.isRequired
 });
+
