@@ -1,20 +1,24 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
+import {CITY_CORDS, CITIES} from '../../const';
 
 import {OfferType} from '../../typings/offer';
 
 import "leaflet/dist/leaflet.css";
 
-const Map = ({cityCords, offers}) => {
+const Map = ({currentCity, offers}) => {
   const mapRef = useRef();
+
+  const icon = leaflet.icon({
+    iconUrl: `img/pin.svg`,
+    iconSize: [30, 30]
+  });
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
-      center: cityCords,
+      center: CITY_CORDS[currentCity.toLowerCase()],
       zoom: 12,
-      zoomControl: false,
-      marker: true
     });
 
     leaflet
@@ -22,25 +26,29 @@ const Map = ({cityCords, offers}) => {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
   })
   .addTo(mapRef.current);
-    offers.forEach((offer) => {
-      const icon = leaflet.icon({
-        iconUrl: `img/pin.svg`,
-        iconSize: [30, 30]
-      });
 
+    return () => {
+      mapRef.current.remove();
+    };
+
+  }, [currentCity]);
+
+
+  useEffect(() => {
+    offers.forEach((offer) => {
       leaflet
-        .marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
-        },
-        {icon})
-        .addTo(mapRef.current);
+      .marker({
+        lat: offer.location.latitude,
+        lng: offer.location.longitude
+      },
+      {icon})
+      .addTo(mapRef.current);
 
       return () => {
         mapRef.current.remove();
       };
     });
-  }, []);
+  }, [currentCity]);
 
   return (
     <section className="cities__map map">
@@ -50,7 +58,7 @@ const Map = ({cityCords, offers}) => {
 };
 
 Map.propTypes = {
-  cityCords: PropTypes.arrayOf(PropTypes.number).isRequired,
+  currentCity: PropTypes.oneOf(CITIES).isRequired,
   offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 

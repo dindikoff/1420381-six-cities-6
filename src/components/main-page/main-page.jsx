@@ -5,10 +5,12 @@ import Header from '../header/header';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
 import {OfferType} from '../../typings/offer';
-import {CITY_CORDS} from '../../const';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
+import {CITIES} from '../../const';
 
 const MainPage = (props) => {
-  const {offers} = props;
+  const {offers, city, onCityChange} = props;
 
   return (
     <React.Fragment>
@@ -16,12 +18,12 @@ const MainPage = (props) => {
         <Header />
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
-          <FilterBar/>
+          <FilterBar onCityChange={onCityChange} currentCity={city}/>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{offers.length} places to stay in {city}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -43,7 +45,7 @@ const MainPage = (props) => {
                 />
               </section>
               <div className="cities__right-section">
-                <Map cityCords={CITY_CORDS.amsterdam} offers={offers}/>
+                <Map currentCity={city} offers={offers}/>
               </div>
             </div>
           </div>
@@ -55,6 +57,21 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
+  city: PropTypes.oneOf(CITIES).isRequired,
+  onCityChange: PropTypes.func.isRequired,
 };
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onCityChange(city) {
+    dispatch(ActionCreator.changeCity(city));
+    dispatch(ActionCreator.fillTheOffersList());
+  },
+});
+
+export {MainPage};
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
