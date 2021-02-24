@@ -16,8 +16,8 @@ const Map = ({currentCity, offers}) => {
   });
 
   useEffect(() => {
-    mapRef.current = leaflet.map(`map`, {
-      center: CITY_CORDS[currentCity.toLowerCase()],
+    const map = leaflet.map(mapRef.current, {
+      center: CITY_CORDS[currentCity],
       zoom: 12,
     });
 
@@ -25,34 +25,27 @@ const Map = ({currentCity, offers}) => {
   .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
   })
-  .addTo(mapRef.current);
+  .addTo(map);
+
+    offers.forEach((offer) => {
+      leaflet
+        .marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
+        },
+        {icon})
+        .addTo(map);
+    });
 
     return () => {
-      mapRef.current.remove();
+      map.remove();
     };
 
   }, [currentCity]);
 
-
-  useEffect(() => {
-    offers.forEach((offer) => {
-      leaflet
-      .marker({
-        lat: offer.location.latitude,
-        lng: offer.location.longitude
-      },
-      {icon})
-      .addTo(mapRef.current);
-
-      return () => {
-        mapRef.current.remove();
-      };
-    });
-  }, [currentCity]);
-
   return (
     <section className="cities__map map">
-      <div id="map" style={{height: `100%`}}></div>
+      <div id="map" style={{height: `100%`}} ref={mapRef}></div>
     </section>
   );
 };

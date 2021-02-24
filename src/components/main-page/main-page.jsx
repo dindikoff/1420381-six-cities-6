@@ -1,4 +1,5 @@
 import React from 'react';
+import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
@@ -8,9 +9,14 @@ import {OfferType} from '../../typings/offer';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {CITIES} from '../../const';
+import {getOffersByCity} from '../../utils';
 
 const MainPage = (props) => {
-  const {offers, city, onCityChange} = props;
+  const {offers, currentCity, changeCity} = props;
+
+  const cityOffers = getOffersByCity(currentCity, offers);
+
+  const handleCityChange = (city) => changeCity(city);
 
   return (
     <React.Fragment>
@@ -18,12 +24,12 @@ const MainPage = (props) => {
         <Header />
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
-          <FilterBar onCityChange={onCityChange} currentCity={city}/>
+          <FilterBar onCityChange={handleCityChange} currentCity={currentCity}/>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in {city}</b>
+                <b className="places__found">{getOffersByCity(currentCity, offers).length} places to stay in {currentCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -39,13 +45,13 @@ const MainPage = (props) => {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <CardList cards={offers} className={`cities__places-list`}
+                <CardList cards={cityOffers} className={`cities__places-list`}
                   cardClassName={`cities__place-card`} cardImageWrapperClassName={`cities__image-wrapper`}
                   cardImageSize={{width: `260px`, height: `200px`}}
                 />
               </section>
               <div className="cities__right-section">
-                <Map currentCity={city} offers={offers}/>
+                <Map currentCity={currentCity} offers={cityOffers}/>
               </div>
             </div>
           </div>
@@ -57,21 +63,19 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
-  city: PropTypes.oneOf(CITIES).isRequired,
-  onCityChange: PropTypes.func.isRequired,
+  currentCity: PropTypes.oneOf(CITIES).isRequired,
+  changeCity: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
+  currentCity: state.city,
   offers: state.offers
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onCityChange(city) {
-    dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.fillTheOffersList());
-  },
-});
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  changeCity: ActionCreator.changeCity
+}, dispatch);
+
 
 export {MainPage};
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

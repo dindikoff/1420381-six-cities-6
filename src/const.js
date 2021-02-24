@@ -1,11 +1,11 @@
 export const RATING_STAR_PERCENT = 20;
 export const CITY_CORDS = {
-  amsterdam: [52.38333, 4.9],
-  paris: [48.8566969, 2.3514616],
-  cologne: [50.938361, 6.959974],
-  brussels: [50.8465573, 4.351697],
-  hamburg: [53.550341, 10.000654],
-  dusseldorf: [51.2254018, 6.7763137]
+  Amsterdam: [52.38333, 4.9],
+  Paris: [48.8566969, 2.3514616],
+  Cologne: [50.938361, 6.959974],
+  Brussels: [50.8465573, 4.351697],
+  Hamburg: [53.550341, 10.000654],
+  Dusseldorf: [51.2254018, 6.7763137]
 };
 
 export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];

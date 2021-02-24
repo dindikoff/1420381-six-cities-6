@@ -20,7 +20,7 @@ const App = () => {
           <LoginPage />
         </Route>
         <Route exact path="/offer/:id" render={({match}) => (
-          <RoomPage match={match}/>
+          <RoomPage id={parseInt(match.params.id, 10)}/>
         )}>
         </Route>
         <Route>

@@ -11,9 +11,9 @@ import {OfferType} from '../../typings/offer';
 import {getMatchedOffer, getNearestOffers} from '../../utils';
 
 const RoomPage = (props) => {
-  const {offers, match} = props;
+  const {offers, id} = props;
 
-  const offer = getMatchedOffer(offers, match);
+  const offer = getMatchedOffer(offers, id);
   const nearestPlaces = getNearestOffers(offers);
 
   if (!offer) {
@@ -131,7 +131,7 @@ const RoomPage = (props) => {
 
 RoomPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
-  match: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

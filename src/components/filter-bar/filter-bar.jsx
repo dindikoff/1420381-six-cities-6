@@ -4,8 +4,8 @@ import {CITIES} from '../../const';
 
 const FilterBar = ({onCityChange, currentCity}) => {
 
-  const handleChangeCity = (evt) => {
-    const city = evt.target.textContent;
+  const handleCityChange = (city, evt) => {
+    evt.preventDefault();
     onCityChange(city);
   };
 
@@ -16,8 +16,8 @@ const FilterBar = ({onCityChange, currentCity}) => {
           {CITIES.map((city) => {
             return (
               <li className="locations__item" key={city}>
-                <a className={`locations__item-link tabs__item ${currentCity === city ? `tabs__item tabs__item--active` : ``}`} href="#">
-                  <span onClick={handleChangeCity} >{city}</span>
+                <a onClick={handleCityChange.bind(null, city)} className={`locations__item-link tabs__item ${currentCity === city ? `tabs__item tabs__item--active` : ``}`} href="#">
+                  <span>{city}</span>
                 </a>
               </li>
             );
