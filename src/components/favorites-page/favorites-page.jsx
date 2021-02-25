@@ -5,6 +5,8 @@ import CardList from "../card-list/card-list";
 import PropTypes from "prop-types";
 import {OfferType} from "../../typings/offer";
 
+import {connect} from 'react-redux';
+
 const FavoritesPage = ({offers}) => {
   const favoriteCards = offers.filter((card) => {
     return card.isFavorite === true;
@@ -48,4 +50,9 @@ FavoritesPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
-export default FavoritesPage;
+const mapStateToProps = (state) => ({
+  offers: state.offers
+});
+
+export {FavoritesPage};
+export default connect(mapStateToProps)(FavoritesPage);

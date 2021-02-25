@@ -6,28 +6,21 @@ import LoginPage from '../login-page/login-page';
 import RoomPage from '../room-page/room-page';
 import Page404 from '../page404/page404';
 
-import {OfferType} from '../../typings/offer';
-import PropTypes from 'prop-types';
-import {getMatchedOffer, getNearestOffers} from '../utils/utils';
-
-const App = (props) => {
-  const {offers} = props;
-
+const App = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage offers={offers} />
+          <MainPage />
         </Route>
         <Route exact path="/favorites">
-          <FavoritesPage offers={offers}/>
+          <FavoritesPage />
         </Route>
         <Route exact path="/login">
           <LoginPage />
         </Route>
         <Route exact path="/offer/:id" render={({match}) => (
-          <RoomPage offer={getMatchedOffer(offers, match)}
-            nearestPlaces={getNearestOffers(offers)}/>
+          <RoomPage id={parseInt(match.params.id, 10)}/>
         )}>
         </Route>
         <Route>
@@ -36,10 +29,6 @@ const App = (props) => {
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 export default App;

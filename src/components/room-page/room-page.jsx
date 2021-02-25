@@ -3,12 +3,19 @@ import Header from '../header/header';
 import CommentsList from '../comments-list/comments-list';
 import CardList from '../card-list/card-list';
 import Page404 from '../page404/page404';
-
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
 import {OfferType} from '../../typings/offer';
 
-const RoomPage = ({offer, nearestPlaces}) => {
+import {getMatchedOffer, getNearestOffers} from '../../utils';
+
+const RoomPage = (props) => {
+  const {offers, id} = props;
+
+  const offer = getMatchedOffer(offers, id);
+  const nearestPlaces = getNearestOffers(offers);
+
   if (!offer) {
     return <Page404 />;
   }
@@ -122,9 +129,16 @@ const RoomPage = ({offer, nearestPlaces}) => {
   );
 };
 
-export default RoomPage;
-
 RoomPage.propTypes = {
-  offer: OfferType,
-  nearestPlaces: PropTypes.arrayOf(OfferType),
+  offers: PropTypes.arrayOf(OfferType).isRequired,
+  id: PropTypes.number.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  offers: state.offers
+});
+
+export {RoomPage};
+export default connect(mapStateToProps)(RoomPage);
+
+

@@ -28,7 +28,7 @@ export const offers = [
     },
     location: {
       latitude: 52.3909553943508,
-      longitude: 4.673877537499948,
+      longitude: 4.973877537499948,
       zoom: 8
     }
   },
@@ -47,7 +47,7 @@ export const offers = [
     features: FEATURES.slice(0, Math.floor(Math.random() * FEATURES.length)),
     isPremium: false,
     isFavorite: true,
-    city: `Irvine`,
+    city: `Paris`,
     comments,
     host: {
       avatar: `avatar-angelina.jpg`,
@@ -56,8 +56,8 @@ export const offers = [
       name: `Babalina`
     },
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      latitude: 48.8566969,
+      longitude: 2.3714616,
       zoom: 8
     }
   },
@@ -105,7 +105,7 @@ export const offers = [
     features: FEATURES.slice(0, Math.floor(Math.random() * FEATURES.length)),
     isPremium: true,
     isFavorite: false,
-    city: `Los Angeles`,
+    city: `Paris`,
     comments,
     host: {
       avatar: `avatar-max.jpg`,
@@ -114,8 +114,8 @@ export const offers = [
       name: `Stanis`
     },
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 48.8566969,
+      longitude: 2.2714616,
       zoom: 8
     }
   },
@@ -134,7 +134,7 @@ export const offers = [
     features: FEATURES.slice(0, Math.floor(Math.random() * FEATURES.length)),
     isPremium: false,
     isFavorite: true,
-    city: `Irvine`,
+    city: `Cologne`,
     comments,
     host: {
       avatar: `avatar-angelina.jpg`,
@@ -143,8 +143,8 @@ export const offers = [
       name: `denis`
     },
     location: {
-      latitude: 52.4009553943508,
-      longitude: 4.939309666406198,
+      latitude: 50.938361,
+      longitude: 6.979974,
       zoom: 8
     }
   },
