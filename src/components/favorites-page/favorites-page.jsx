@@ -7,10 +7,8 @@ import {OfferType} from "../../typings/offer";
 
 import {connect} from 'react-redux';
 
-const FavoritesPage = (props) => {
-  const {allOffers} = props;
-
-  const favoriteCards = allOffers.filter((card) => {
+const FavoritesPage = ({offers}) => {
+  const favoriteCards = offers.filter((card) => {
     return card.isFavorite === true;
   });
 
@@ -49,11 +47,11 @@ const FavoritesPage = (props) => {
 };
 
 FavoritesPage.propTypes = {
-  allOffers: PropTypes.arrayOf(OfferType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  allOffers: state.allOffers
+  offers: state.offers
 });
 
 export {FavoritesPage};
