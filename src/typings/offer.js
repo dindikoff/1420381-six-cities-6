@@ -20,7 +20,6 @@ export const OfferType = PropTypes.exact({
   images: PropTypes.array.isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   type: PropTypes.oneOf([RoomType.apartment, RoomType.hotel, RoomType.house, RoomType.room]).isRequired,
   roomCount: PropTypes.number.isRequired,
@@ -28,7 +27,14 @@ export const OfferType = PropTypes.exact({
   features: PropTypes.array.isRequired,
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
-  city: PropTypes.string.isRequired,
+  city: PropTypes.exact({
+    name: PropTypes.string.isRequired,
+    location: PropTypes.exact({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      zoom: PropTypes.number.isRequired
+    }).isRequired
+  }),
   comments: PropTypes.arrayOf(CommentType),
   host: PropTypes.exact({
     avatar: PropTypes.string.isRequired,
@@ -36,6 +42,7 @@ export const OfferType = PropTypes.exact({
     isPro: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired
   }),
-  location: LocationType.isRequired
+  location: LocationType.isRequired,
+  title: PropTypes.string.isRequired,
 });
 

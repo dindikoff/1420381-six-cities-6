@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../header/header';
-import CommentsList from '../comments-list/comments-list';
+// import CommentsList from '../comments-list/comments-list';
 import CardList from '../card-list/card-list';
 import Page404 from '../page404/page404';
 import {connect} from 'react-redux';
@@ -109,7 +109,7 @@ const RoomPage = (props) => {
                   </p>
                 </div>
               </div>
-              <CommentsList comments={offer.comments}/>
+              {/* <CommentsList comments={offer.comments}/> */}
             </div>
           </div>
           <section className="property__map map" />

@@ -2,5 +2,5 @@ export const getMatchedOffer = (cards, id) => cards.find((card) => card.id === p
 export const getNearestOffers = (cards) => cards.slice(0, 3);
 
 export const getOffersByCity = (city, offers) => {
-  return offers.filter((offer) => offer.city === city);
+  return offers.filter((offer) => offer.city.name === city);
 };
