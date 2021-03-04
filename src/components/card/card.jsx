@@ -6,11 +6,12 @@ import {OfferType} from '../../typings/offer';
 
 const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName, cardImageSize}) => {
   const {
-    name, imagePreview,
+    title, imagePreview,
     price, type,
     isPremium, rating,
     isFavorite, id,
   } = card;
+
 
   const handleCardMouseEnter = () => {
     onActivityChange(id);
@@ -59,7 +60,7 @@ const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName,
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{name}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{ROOM_TYPE_TO_ROOM_NAME[type]}</p>
       </div>

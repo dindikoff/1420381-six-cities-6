@@ -5,6 +5,7 @@ import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
+
 import {OfferType} from '../../typings/offer';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
@@ -13,8 +14,7 @@ import {getOffersByCity} from '../../utils';
 
 const MainPage = (props) => {
   const {offers, currentCity, changeCity} = props;
-
-  const cityOffers = getOffersByCity(currentCity, offers);
+  let cityOffers = getOffersByCity(currentCity, offers);
 
   const handleCityChange = (city) => changeCity(city);
 
@@ -69,13 +69,12 @@ MainPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   currentCity: state.city,
-  offers: state.offers
+  offers: state.offers,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   changeCity: ActionCreator.changeCity
 }, dispatch);
-
 
 export {MainPage};
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
