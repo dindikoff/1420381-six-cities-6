@@ -12,11 +12,7 @@ export const createApi = () => {
 
   const onSuccess = (response) => response;
 
-  const onError = (error) => {
-    throw new Error(error.status);
-  };
-
-  api.interceptors.response.use(onSuccess, onError);
+  api.interceptors.response.use(onSuccess);
 
   return api;
 };

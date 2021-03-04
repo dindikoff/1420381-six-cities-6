@@ -1,6 +1,20 @@
-export const adaptToClient = (offer) => {
+export const adaptOfferToClient = (offer) => {
   const adaptedOffer = {
-    ...offer,
+    id: offer.id,
+    images: offer.images,
+    price: offer.price,
+    rating: offer.rating,
+    title: offer.title,
+    type: offer.type,
+    city: {
+      name: offer.city.name
+    },
+    location: {
+      latitude: offer.location.latitude,
+      longitude: offer.location.longitude,
+      zoom: offer.location.zoom,
+    },
+    description: offer.description,
     roomCount: offer.bedrooms,
     features: offer.goods,
     host: {
@@ -14,13 +28,6 @@ export const adaptToClient = (offer) => {
     roomCapacity: offer.max_adults,
     imagePreview: offer.preview_image,
   };
-
-  delete adaptedOffer.bedrooms;
-  delete adaptedOffer.goods;
-  delete adaptedOffer.is_favorite;
-  delete adaptedOffer.is_premium;
-  delete adaptedOffer.max_adults;
-  delete adaptedOffer.preview_image;
 
   return adaptedOffer;
 };

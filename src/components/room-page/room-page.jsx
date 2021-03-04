@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/header';
 // import CommentsList from '../comments-list/comments-list';
 import CardList from '../card-list/card-list';
-import Page404 from '../page404/page404';
+import Page404 from '../page-404/page-404';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';

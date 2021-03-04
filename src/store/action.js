@@ -1,6 +1,6 @@
 export const ActionType = {
-  CHANGE_CITY: `CHANGE_CITY`,
-  LOAD_OFFERS: `data/loadOffers`
+  CHANGE_CITY: `app/changeCity`,
+  SET_OFFERS: `data/setOffers`
 };
 
 export const ActionCreator = {
@@ -8,8 +8,8 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: city
   }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
+  setOffers: (offers) => ({
+    type: ActionType.SET_OFFERS,
     payload: offers
   })
 };

@@ -3,7 +3,7 @@ import {ActionType} from './action';
 const initialState = {
   city: `Paris`,
   offers: [],
-  isDataLoaded: false,
+  isOffersLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,11 +14,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         city: action.payload
       };
-    case ActionType.LOAD_OFFERS:
+    case ActionType.SET_OFFERS:
       return {
         ...state,
         offers: action.payload,
-        isDataLoaded: true
+        isOffersLoaded: true
       };
   }
 

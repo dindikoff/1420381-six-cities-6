@@ -29,11 +29,6 @@ export const OfferType = PropTypes.exact({
   isFavorite: PropTypes.bool.isRequired,
   city: PropTypes.exact({
     name: PropTypes.string.isRequired,
-    location: PropTypes.exact({
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
-      zoom: PropTypes.number.isRequired
-    }).isRequired
   }),
   comments: PropTypes.arrayOf(CommentType),
   host: PropTypes.exact({

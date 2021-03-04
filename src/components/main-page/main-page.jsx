@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
-import LoadingScreen from '../loading-screen/loading-screen';
-import {fetchOffersList} from '../../store/api-actions';
+
 import {OfferType} from '../../typings/offer';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
@@ -14,21 +13,8 @@ import {CITIES} from '../../const';
 import {getOffersByCity} from '../../utils';
 
 const MainPage = (props) => {
-  const {offers, currentCity, changeCity, isDataLoaded, onLoadData} = props;
-
+  const {offers, currentCity, changeCity} = props;
   let cityOffers = getOffersByCity(currentCity, offers);
-
-  useEffect(() => {
-    if (!isDataLoaded) {
-      onLoadData();
-    }
-  }, [isDataLoaded]);
-
-  if (!isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
 
   const handleCityChange = (city) => changeCity(city);
 
@@ -79,19 +65,15 @@ MainPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
   currentCity: PropTypes.oneOf(CITIES).isRequired,
   changeCity: PropTypes.func.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   currentCity: state.city,
   offers: state.offers,
-  isDataLoaded: state.isDataLoaded
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  changeCity: ActionCreator.changeCity,
-  onLoadData: fetchOffersList
+  changeCity: ActionCreator.changeCity
 }, dispatch);
 
 export {MainPage};
