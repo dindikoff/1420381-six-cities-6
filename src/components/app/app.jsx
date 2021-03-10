@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import propTypes from 'prop-types';
 import MainPage from '../main-page/main-page';
 import FavoritesPage from '../favorites-page/favorites-page';
@@ -7,11 +7,14 @@ import LoginPage from '../login-page/login-page';
 import RoomPage from '../room-page/room-page';
 import Page404 from '../page-404/page-404';
 import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from "../../browser-history";
 
 import {connect} from 'react-redux';
 
 import {fetchOffersList} from '../../store/api-actions';
 import {bindActionCreators} from 'redux';
+import {AppRoute} from '../../const';
 
 const App = (props) => {
   const {isOffersLoaded, onLoadData} = props;
@@ -29,18 +32,16 @@ const App = (props) => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.MainPage}>
           <MainPage />
         </Route>
-        <Route exact path="/favorites">
-          <FavoritesPage />
-        </Route>
+        <PrivateRoute exact path={AppRoute.Favorites} render={() => <FavoritesPage/> }></PrivateRoute>
         <Route exact path="/login">
           <LoginPage />
         </Route>
-        <Route exact path="/offer/:id" render={({match}) => (
+        <Route exact path={`${AppRoute.OfferPage}/:id`} render={({match}) => (
           <RoomPage id={parseInt(match.params.id, 10)}/>
         )}>
         </Route>

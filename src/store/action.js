@@ -1,6 +1,9 @@
 export const ActionType = {
   CHANGE_CITY: `app/changeCity`,
-  SET_OFFERS: `data/setOffers`
+  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  SET_OFFERS: `data/setOffers`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_USER_INFO: `user/setUserInfo`,
 };
 
 export const ActionCreator = {
@@ -11,5 +14,17 @@ export const ActionCreator = {
   setOffers: (offers) => ({
     type: ActionType.SET_OFFERS,
     payload: offers
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  }),
+  setUserInfo: (info) => ({
+    type: ActionType.SET_USER_INFO,
+    payload: info
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url
   })
 };
