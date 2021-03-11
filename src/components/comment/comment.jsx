@@ -4,6 +4,7 @@ import {RATING_STAR_PERCENT} from '../../const';
 import * as dayjs from 'dayjs';
 
 const Comment = ({comment}) => {
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -32,7 +33,7 @@ const Comment = ({comment}) => {
 
 export const CommentType = PropTypes.exact({
   text: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  date: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   user: PropTypes.exact({

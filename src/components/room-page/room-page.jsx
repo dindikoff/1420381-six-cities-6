@@ -1,24 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from '../header/header';
-// import CommentsList from '../comments-list/comments-list';
+import CommentsList from '../comments-list/comments-list';
+import {CommentType} from '../comment/comment';
 import CardList from '../card-list/card-list';
 import Page404 from '../page-404/page-404';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
 import {OfferType} from '../../typings/offer';
+import {bindActionCreators} from 'redux';
+import {fetchComments} from '../../store/api-actions';
 
 import {getMatchedOffer, getNearestOffers} from '../../utils';
 
 const RoomPage = (props) => {
-  const {offers, id} = props;
+  const {offers, id, comments, onLoadData} = props;
 
   const offer = getMatchedOffer(offers, id);
   const nearestPlaces = getNearestOffers(offers);
 
+  useEffect(() => {
+    onLoadData(id);
+  }, [id]);
+
   if (!offer) {
     return <Page404 />;
   }
+
   return (
     <React.Fragment>
       <Header />
@@ -94,7 +102,7 @@ const RoomPage = (props) => {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={`img/` + offer.host.avatar} width={74} height={74} alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={offer.host.avatar} width={74} height={74} alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {offer.host.name}
@@ -109,7 +117,7 @@ const RoomPage = (props) => {
                   </p>
                 </div>
               </div>
-              {/* <CommentsList comments={offer.comments}/> */}
+              <CommentsList comments={comments}/>
             </div>
           </div>
           <section className="property__map map" />
@@ -132,13 +140,21 @@ const RoomPage = (props) => {
 RoomPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
   id: PropTypes.number.isRequired,
+  comments: PropTypes.arrayOf(CommentType).isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers
+  offers: state.offers,
+  isCommentsLoaded: state.isCommentsLoaded,
+  comments: state.comments,
 });
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onLoadData: fetchComments
+}, dispatch);
+
 export {RoomPage};
-export default connect(mapStateToProps)(RoomPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);
 
 

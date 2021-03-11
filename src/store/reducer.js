@@ -7,6 +7,7 @@ const initialState = {
   isOffersLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   userInfo: {},
+  comments: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +33,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
+      };
+    case ActionType.SET_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
       };
   }
 

@@ -1,5 +1,5 @@
 import {ActionCreator} from './action';
-import {adaptOfferToClient} from '../services/adapter';
+import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
 import {AuthorizationStatus, ApiRoute} from '../const';
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
@@ -26,4 +26,12 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       dispatch(ActionCreator.setUserInfo(data));
     })
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+);
+
+export const fetchComments = (id) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`)
+    .then(({data}) => {
+      const adaptedData = data.map((comment) => adaptCommentToClient(comment));
+      dispatch(ActionCreator.setComments(adaptedData));
+    })
 );

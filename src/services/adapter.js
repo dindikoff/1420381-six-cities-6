@@ -31,3 +31,19 @@ export const adaptOfferToClient = (offer) => {
 
   return adaptedOffer;
 };
+
+
+export const adaptCommentToClient = (serverComment) => {
+  return {
+    text: serverComment.comment,
+    date: serverComment.date,
+    id: serverComment.id,
+    rating: serverComment.rating,
+    user: {
+      id: serverComment.user.id,
+      avatar: serverComment.user.avatar_url,
+      isPro: serverComment.user.is_pro,
+      name: serverComment.user.name
+    }
+  };
+};
