@@ -20,3 +20,22 @@ export const ROOM_TYPE_TO_ROOM_NAME = {
   house: `House`,
   hotel: `Hotel`
 };
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+export const AppRoute = {
+  MainPage: `/`,
+  Login: `/login`,
+  Favorites: `/favorites`,
+  OfferPage: `/offer`,
+};
+
+export const ApiRoute = {
+  Offers: `/hotels`,
+  Login: `/login`,
+  Logout: `/logout`
+};
+
