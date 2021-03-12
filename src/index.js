@@ -14,7 +14,7 @@ import App from './components/app/app';
 import {ActionCreator} from './store/action';
 import {getUserData} from './store/api-actions';
 
-const api = createApi(() => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)));
+const api = createApi(() => store.dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.NO_AUTH)));
 
 const store = createStore(
     reducer,

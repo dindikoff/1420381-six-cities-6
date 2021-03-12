@@ -3,7 +3,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
   SET_OFFERS: `data/setOffers`,
   SET_COMMENTS: `data/setComments`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
   SET_USER_INFO: `user/setUserInfo`,
 };
 
@@ -16,8 +16,8 @@ export const ActionCreator = {
     type: ActionType.SET_OFFERS,
     payload: offers
   }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
+  setAuthorizationStatus: (status) => ({
+    type: ActionType.SET_AUTHORIZATION_STATUS,
     payload: status,
   }),
   setUserInfo: (info) => ({
