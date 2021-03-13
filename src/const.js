@@ -27,15 +27,16 @@ export const AuthorizationStatus = {
 };
 
 export const AppRoute = {
-  MainPage: `/`,
-  Login: `/login`,
-  Favorites: `/favorites`,
-  OfferPage: `/offer`,
+  MAIN_PAGE: `/`,
+  LOGIN: `/login`,
+  FAVORITES: `/favorites`,
+  OFFER_PAGE: `/offer/:id`,
 };
 
 export const ApiRoute = {
-  Offers: `/hotels`,
-  Login: `/login`,
-  Logout: `/logout`
+  OFFERS: `/hotels/`,
+  LOGIN: `/login/`,
+  LOGOUT: `/logout/`,
+  COMMENTS: `/comments/`
 };
 

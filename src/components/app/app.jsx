@@ -34,14 +34,14 @@ const App = (props) => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path={AppRoute.MainPage}>
+        <Route exact path={AppRoute.MAIN_PAGE}>
           <MainPage />
         </Route>
-        <PrivateRoute exact path={AppRoute.Favorites} render={() => <FavoritesPage/> }></PrivateRoute>
-        <Route exact path="/login">
+        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <FavoritesPage/> }></PrivateRoute>
+        <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
         </Route>
-        <Route exact path={`${AppRoute.OfferPage}/:id`} render={({match}) => (
+        <Route exact path={`${AppRoute.OFFER_PAGE}`} render={({match}) => (
           <RoomPage id={parseInt(match.params.id, 10)}/>
         )}>
         </Route>
