@@ -1,26 +1,24 @@
 import React, {useEffect} from 'react';
 import Header from '../header/header';
 import CommentsList from '../comments-list/comments-list';
-import {CommentType} from '../comment/comment';
 import CardList from '../card-list/card-list';
 import Page404 from '../page-404/page-404';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
-import {OfferType} from '../../typings/offer';
-import {bindActionCreators} from 'redux';
 import {fetchComments} from '../../store/api-actions';
 
 import {getMatchedOffer, getNearestOffers} from '../../utils';
 
-const RoomPage = (props) => {
-  const {offers, id, comments, onLoadData} = props;
-
+const RoomPage = ({id}) => {
+  const {offers, comments} = useSelector((state) => state.DATA);
   const offer = getMatchedOffer(offers, id);
   const nearestPlaces = getNearestOffers(offers);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    onLoadData(id);
+    dispatch(fetchComments(id));
   }, [id]);
 
   if (!offer) {
@@ -138,23 +136,9 @@ const RoomPage = (props) => {
 };
 
 RoomPage.propTypes = {
-  offers: PropTypes.arrayOf(OfferType).isRequired,
   id: PropTypes.number.isRequired,
-  comments: PropTypes.arrayOf(CommentType).isRequired,
-  onLoadData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  isCommentsLoaded: state.isCommentsLoaded,
-  comments: state.comments,
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onLoadData: fetchComments
-}, dispatch);
-
-export {RoomPage};
-export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);
+export default RoomPage;
 
 

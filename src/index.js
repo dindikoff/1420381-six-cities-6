@@ -1,28 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
-import thunk from "redux-thunk";
+import {configureStore} from '@reduxjs/toolkit';
 import {redirect} from "./store/middlewares/redirect";
 import {createApi} from "./services/api";
 
 import {Provider} from 'react-redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import {reducer} from './store/reducer';
+import {rootReducer} from './store/reducers/root-reducer';
 import {AuthorizationStatus} from './const';
 
 import App from './components/app/app';
-import {ActionCreator} from './store/action';
+import {setAuthorizationStatus} from './store/action';
 import {getUserData} from './store/api-actions';
 
-const api = createApi(() => store.dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.NO_AUTH)));
+const api = createApi(() => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH)));
 
-const store = createStore(
-    reducer,
-    composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api)),
-        applyMiddleware(redirect)
-    )
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api
+      },
+    }).concat(redirect)
+});
 
 store.dispatch(getUserData());
 
