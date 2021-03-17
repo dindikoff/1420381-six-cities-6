@@ -1,22 +1,22 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import PropTypes from 'prop-types';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
 
-import {OfferType} from '../../typings/offer';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
-import {CITIES} from '../../const';
+import {useSelector, useDispatch} from 'react-redux';
+import {changeCity} from '../../store/action';
 import {getOffersByCity} from '../../utils';
 
-const MainPage = (props) => {
-  const {offers, currentCity, changeCity} = props;
+const MainPage = () => {
+  const {currentCity} = useSelector((state) => state.APP);
+  const {offers} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
+
   let cityOffers = getOffersByCity(currentCity, offers);
 
-  const handleCityChange = (city) => changeCity(city);
+  const handleCityChange = (city) => dispatch(changeCity(city));
 
   return (
     <React.Fragment>
@@ -61,20 +61,4 @@ const MainPage = (props) => {
   );
 };
 
-MainPage.propTypes = {
-  offers: PropTypes.arrayOf(OfferType).isRequired,
-  currentCity: PropTypes.oneOf(CITIES).isRequired,
-  changeCity: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentCity: state.city,
-  offers: state.offers,
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  changeCity: ActionCreator.changeCity
-}, dispatch);
-
-export {MainPage};
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;

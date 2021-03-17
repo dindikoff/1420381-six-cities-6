@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_CITY: `app/changeCity`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
@@ -7,29 +9,38 @@ export const ActionType = {
   SET_USER_INFO: `user/setUserInfo`,
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => {
+  return {
     payload: city
-  }),
-  setOffers: (offers) => ({
-    type: ActionType.SET_OFFERS,
+  };
+});
+
+export const setOffers = createAction(ActionType.SET_OFFERS, (offers) => {
+  return {
     payload: offers
-  }),
-  setAuthorizationStatus: (status) => ({
-    type: ActionType.SET_AUTHORIZATION_STATUS,
-    payload: status,
-  }),
-  setUserInfo: (info) => ({
-    type: ActionType.SET_USER_INFO,
+  };
+});
+
+export const setAuthorizationStatus = createAction(ActionType.SET_AUTHORIZATION_STATUS, (status) => {
+  return {
+    payload: status
+  };
+});
+
+export const setUserInfo = createAction(ActionType.SET_USER_INFO, (info) => {
+  return {
     payload: info
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
+  };
+});
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => {
+  return {
     payload: url
-  }),
-  setComments: (comments) => ({
-    type: ActionType.SET_COMMENTS,
+  };
+});
+
+export const setComments = createAction(ActionType.SET_COMMENTS, (comments) => {
+  return {
     payload: comments
-  })
-};
+  };
+});

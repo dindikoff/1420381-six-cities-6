@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import Comment, {CommentType} from '../comment/comment';
 import CommentForm from "../comment-form/comment-form";
+import {useSelector} from 'react-redux';
 import {AuthorizationStatus} from '../../const';
 
-const CommentsList = ({comments, authorizationStatus}) => {
+const CommentsList = ({comments}) => {
+
+  const {authorizationStatus} = useSelector((state) => state.USER);
+
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments.length}</span></h2>
@@ -19,12 +22,6 @@ const CommentsList = ({comments, authorizationStatus}) => {
 
 CommentsList.propTypes = {
   comments: PropTypes.arrayOf(CommentType).isRequired,
-  authorizationStatus: PropTypes.oneOf(Object.values(AuthorizationStatus))
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus
-});
-
-export {CommentsList};
-export default connect(mapStateToProps)(CommentsList);
+export default CommentsList;
