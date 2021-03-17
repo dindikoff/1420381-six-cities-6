@@ -5,10 +5,10 @@ const initialState = {
   currentCity: `Paris`,
 };
 
-const appProcess = createReducer(initialState, (builder) => {
+const appReducer = createReducer(initialState, (builder) => {
   builder.addCase(changeCity, (state, action) => {
     state.currentCity = action.payload;
   });
 });
 
-export {appProcess};
+export {appReducer};

@@ -7,7 +7,7 @@ const initialState = {
   userInfo: {},
 };
 
-const user = createReducer(initialState, (builder) => {
+const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(setAuthorizationStatus, (state, action) => {
     state.authorizationStatus = action.payload;
   });
@@ -17,4 +17,4 @@ const user = createReducer(initialState, (builder) => {
   });
 });
 
-export {user};
+export {userReducer};

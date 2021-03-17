@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {appData} from './app-data/app-data';
-import {appProcess} from './app-process/app-process';
-import {user} from './user/user';
+import {dataReducer} from './data-reducer/data-reducer';
+import {appReducer} from './app-reducer/app-reducer';
+import {userReducer} from './user-reducer/user-reducer';
 
 export const NameSpace = {
   APP: `APP`,
@@ -10,7 +10,7 @@ export const NameSpace = {
 };
 
 export const rootReducer = combineReducers({
-  [NameSpace.APP]: appProcess,
-  [NameSpace.DATA]: appData,
-  [NameSpace.USER]: user,
+  [NameSpace.APP]: appReducer,
+  [NameSpace.DATA]: dataReducer,
+  [NameSpace.USER]: userReducer,
 });

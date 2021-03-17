@@ -1,14 +1,15 @@
-import {setOffers, setComments} from '../../action';
+import {setOffers, setComments, setNearByOffers} from '../../action';
 import {createReducer} from '@reduxjs/toolkit';
 
 
 const initialState = {
   offers: [],
+  nearByOffers: [],
   isOffersLoaded: false,
   comments: [],
 };
 
-const appData = createReducer(initialState, (builder) => {
+const dataReducer = createReducer(initialState, (builder) => {
   builder.addCase(setOffers, (state, action) => {
     state.offers = action.payload;
     state.isOffersLoaded = true;
@@ -17,6 +18,10 @@ const appData = createReducer(initialState, (builder) => {
   builder.addCase(setComments, (state, action) => {
     state.comments = action.payload;
   });
+
+  builder.addCase(setNearByOffers, (state, action) => {
+    state.nearByOffers = action.payload;
+  });
 });
 
-export {appData};
+export {dataReducer};

@@ -51,7 +51,9 @@ const MainPage = () => {
                 />
               </section>
               <div className="cities__right-section">
-                <Map currentCity={currentCity} offers={cityOffers}/>
+                <section className="cities__map map">
+                  <Map currentCity={currentCity} offers={cityOffers}/>
+                </section>
               </div>
             </div>
           </div>
