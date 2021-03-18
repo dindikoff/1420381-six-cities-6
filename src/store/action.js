@@ -5,6 +5,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
   SET_ACTIVE_CARD: `app/setActiveCard`,
   SET_OFFERS: `data/setOffers`,
+  SET_ONE_OFFER: `data/setOneOffer`,
   SET_NEAR_BY_OFFERS: `data/setNearByOffers`,
   SET_COMMENTS: `data/setComments`,
   SORT_OFFERS: `data/sortOffers`,
@@ -25,6 +26,12 @@ export const setActiveCard = createAction(ActionType.SET_ACTIVE_CARD, (cardId) =
 });
 
 export const setOffers = createAction(ActionType.SET_OFFERS, (offers) => {
+  return {
+    payload: offers
+  };
+});
+
+export const setOneOffer = createAction(ActionType.SET_ONE_OFFER, (offers) => {
   return {
     payload: offers
   };
