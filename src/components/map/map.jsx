@@ -56,7 +56,7 @@ const Map = ({currentCity, offers, activeCardId}) => {
 Map.propTypes = {
   currentCity: PropTypes.oneOf(CITIES).isRequired,
   offers: PropTypes.arrayOf(OfferType).isRequired,
-  activeCardId: PropTypes.number || PropTypes.string
+  activeCardId: PropTypes.number
 };
 
 export default Map;
