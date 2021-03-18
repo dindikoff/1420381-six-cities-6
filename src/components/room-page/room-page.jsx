@@ -1,19 +1,22 @@
 import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import Header from '../header/header';
 import CommentsList from '../comments-list/comments-list';
-import CardList from '../card-list/card-list';
+import CardNearBy from '../card-nearby/card-nearby';
 import Page404 from '../page-404/page-404';
-import {useSelector, useDispatch} from 'react-redux';
+import Map from '../map/map';
 import PropTypes from 'prop-types';
 import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
 import {fetchComments} from '../../store/api-actions';
 
-import {getMatchedOffer, getNearestOffers} from '../../utils';
+import {getMatchedOffer, getOffersByCity} from '../../utils';
+
 
 const RoomPage = ({id}) => {
   const {offers, comments} = useSelector((state) => state.DATA);
+  const {currentCity} = useSelector((state) => state.APP);
   const offer = getMatchedOffer(offers, id);
-  const nearestPlaces = getNearestOffers(offers);
+  const cityOffers = getOffersByCity(currentCity, offers);
 
   const dispatch = useDispatch();
 
@@ -118,16 +121,12 @@ const RoomPage = ({id}) => {
               <CommentsList comments={comments}/>
             </div>
           </div>
-          <section className="property__map map" />
+          <section className="property__map map">
+            <Map currentCity={currentCity} offers={cityOffers}/>
+          </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighborhood</h2>
-            <CardList cards={nearestPlaces} className={`near-places__list`}
-              cardClassName={`near-places__card`} cardImageWrapperClassName={`near-places__image-wrapper`}
-              cardImageSize={{width: `260px`, height: `200px`}}
-            />
-          </section>
+          <CardNearBy id={id}/>
         </div>
       </main>
 

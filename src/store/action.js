@@ -4,6 +4,7 @@ export const ActionType = {
   CHANGE_CITY: `app/changeCity`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
   SET_OFFERS: `data/setOffers`,
+  SET_NEAR_BY_OFFERS: `data/setNearByOffers`,
   SET_COMMENTS: `data/setComments`,
   SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
   SET_USER_INFO: `user/setUserInfo`,
@@ -16,6 +17,12 @@ export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => {
 });
 
 export const setOffers = createAction(ActionType.SET_OFFERS, (offers) => {
+  return {
+    payload: offers
+  };
+});
+
+export const setNearByOffers = createAction(ActionType.SET_NEAR_BY_OFFERS, (offers) => {
   return {
     payload: offers
   };
