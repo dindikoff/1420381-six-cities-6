@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
