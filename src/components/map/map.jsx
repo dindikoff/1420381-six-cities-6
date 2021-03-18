@@ -7,11 +7,16 @@ import {OfferType} from '../../typings/offer';
 
 import "leaflet/dist/leaflet.css";
 
-const Map = ({currentCity, offers}) => {
+const Map = ({currentCity, offers, activeCardId}) => {
   const mapRef = useRef();
 
-  const icon = leaflet.icon({
+  const iconDisabled = leaflet.icon({
     iconUrl: `img/pin.svg`,
+    iconSize: [30, 30]
+  });
+
+  const iconActive = leaflet.icon({
+    iconUrl: `img/pin-active.svg`,
     iconSize: [30, 30]
   });
 
@@ -33,7 +38,7 @@ const Map = ({currentCity, offers}) => {
           lat: offer.location.latitude,
           lng: offer.location.longitude
         },
-        {icon})
+        {icon: offer.id === activeCardId ? iconActive : iconDisabled})
         .addTo(map);
     });
 
@@ -41,7 +46,7 @@ const Map = ({currentCity, offers}) => {
       map.remove();
     };
 
-  }, [currentCity]);
+  }, [currentCity, activeCardId]);
 
   return (
     <div id="map" style={{height: `100%`}} ref={mapRef}></div>
@@ -51,6 +56,7 @@ const Map = ({currentCity, offers}) => {
 Map.propTypes = {
   currentCity: PropTypes.oneOf(CITIES).isRequired,
   offers: PropTypes.arrayOf(OfferType).isRequired,
+  activeCardId: PropTypes.number
 };
 
 export default Map;

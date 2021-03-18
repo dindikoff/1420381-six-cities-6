@@ -2,6 +2,7 @@ import React from 'react';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
+import CardSorting from '../card-sorting/card-sorting';
 import Map from '../map/map';
 
 import {useSelector, useDispatch} from 'react-redux';
@@ -9,7 +10,7 @@ import {changeCity} from '../../store/action';
 import {getOffersByCity} from '../../utils';
 
 const MainPage = () => {
-  const {currentCity} = useSelector((state) => state.APP);
+  const {currentCity, activeCardId} = useSelector((state) => state.APP);
   const {offers} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
@@ -30,21 +31,7 @@ const MainPage = () => {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{cityOffers.length} places to stay in {currentCity}</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex={0}>
-                    Popular
-                    <svg className="places__sorting-arrow" style={{width: 7, height: 4}}>
-                      <use xlinkHref="#icon-arrow-select" />
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                    <li className="places__option" tabIndex={0}>Price: low to high</li>
-                    <li className="places__option" tabIndex={0}>Price: high to low</li>
-                    <li className="places__option" tabIndex={0}>Top rated first</li>
-                  </ul>
-                </form>
+                <CardSorting/>
                 <CardList cards={cityOffers} className={`cities__places-list`}
                   cardClassName={`cities__place-card`} cardImageWrapperClassName={`cities__image-wrapper`}
                   cardImageSize={{width: `260px`, height: `200px`}}
@@ -52,7 +39,7 @@ const MainPage = () => {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map currentCity={currentCity} offers={cityOffers}/>
+                  <Map currentCity={currentCity} offers={cityOffers} activeCardId={activeCardId}/>
                 </section>
               </div>
             </div>
