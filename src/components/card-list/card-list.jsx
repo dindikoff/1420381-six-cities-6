@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
 import {OfferType} from '../../typings/offer';
+import {setActiveCard} from '../../store/action';
 
 const CardList = ({cards, className, cardClassName, cardImageWrapperClassName, cardImageSize}) => {
-  const [, setState] = useState({active: ``});
+  const dispatch = useDispatch();
 
   const handleActivityChange = (id) => {
-    setState({active: id});
+    dispatch(setActiveCard(id));
   };
 
   return (

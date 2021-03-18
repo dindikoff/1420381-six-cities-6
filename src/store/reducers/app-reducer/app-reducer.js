@@ -1,4 +1,4 @@
-import {changeCity} from '../../action';
+import {changeCity, setActiveCard} from '../../action';
 import {createReducer} from '@reduxjs/toolkit';
 
 const initialState = {
@@ -8,6 +8,9 @@ const initialState = {
 const appReducer = createReducer(initialState, (builder) => {
   builder.addCase(changeCity, (state, action) => {
     state.currentCity = action.payload;
+  });
+  builder.addCase(setActiveCard, (state, action) => {
+    state.activeCardId = action.payload;
   });
 });
 

@@ -3,6 +3,7 @@ import {createAction} from '@reduxjs/toolkit';
 export const ActionType = {
   CHANGE_CITY: `app/changeCity`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  SET_ACTIVE_CARD: `app/setActiveCard`,
   SET_OFFERS: `data/setOffers`,
   SET_NEAR_BY_OFFERS: `data/setNearByOffers`,
   SET_COMMENTS: `data/setComments`,
@@ -14,6 +15,12 @@ export const ActionType = {
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => {
   return {
     payload: city
+  };
+});
+
+export const setActiveCard = createAction(ActionType.SET_ACTIVE_CARD, (cardId) => {
+  return {
+    payload: cardId
   };
 });
 

@@ -10,7 +10,7 @@ import {changeCity} from '../../store/action';
 import {getOffersByCity} from '../../utils';
 
 const MainPage = () => {
-  const {currentCity} = useSelector((state) => state.APP);
+  const {currentCity, activeCardId} = useSelector((state) => state.APP);
   const {offers} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const MainPage = () => {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map currentCity={currentCity} offers={cityOffers}/>
+                  <Map currentCity={currentCity} offers={cityOffers} activeCardId={activeCardId}/>
                 </section>
               </div>
             </div>
