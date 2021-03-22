@@ -1,16 +1,10 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import CardList from '../card-list/card-list';
 import PropTypes from 'prop-types';
-import {fetchOffersNearBy} from '../../store/api-actions';
 
-const CardNearBy = ({id}) => {
+const CardNearBy = () => {
   const {nearByOffers} = useSelector((state) => state.DATA);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOffersNearBy(id));
-  }, [id]);
 
   return (
     <section className="near-places places">

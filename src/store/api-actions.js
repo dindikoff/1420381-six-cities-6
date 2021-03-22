@@ -36,6 +36,14 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
     })
 );
 
+export const sendComment = ({id, rating, comment}) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.COMMENTS}${id}`, {rating, comment})
+    .then(({data}) => {
+      const adaptedData = data.map(adaptCommentToClient);
+      dispatch(setComments(adaptedData));
+    })
+);
+
 export const fetchOffersNearBy = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.OFFERS}${id}/nearby`)
     .then(({data}) => {

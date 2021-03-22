@@ -4,6 +4,7 @@ import {createReducer} from '@reduxjs/toolkit';
 
 const initialState = {
   offers: [],
+  oneOffer: [],
   nearByOffers: [],
   isOffersLoaded: false,
   isOneOfferLoaded: false,
@@ -17,7 +18,7 @@ const dataReducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(setOneOffer, (state, action) => {
-    state.offers = action.payload;
+    state.oneOffer = action.payload;
     state.isOneOfferLoaded = true;
   });
 

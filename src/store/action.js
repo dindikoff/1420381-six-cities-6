@@ -38,9 +38,9 @@ export const setOffers = createAction(ActionType.SET_OFFERS, (offers) => {
   };
 });
 
-export const setOneOffer = createAction(ActionType.SET_ONE_OFFER, (offers) => {
+export const setOneOffer = createAction(ActionType.SET_ONE_OFFER, (offer) => {
   return {
-    payload: offers
+    payload: offer
   };
 });
 
