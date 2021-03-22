@@ -1,8 +1,10 @@
-import {changeCity, setActiveCard} from '../../action';
+import {changeCity, setActiveCard, setSortFilterType} from '../../action';
 import {createReducer} from '@reduxjs/toolkit';
 
 const initialState = {
   currentCity: `Paris`,
+  activeCardId: -1,
+  sortedType: `POPULAR`
 };
 
 const appReducer = createReducer(initialState, (builder) => {
@@ -11,6 +13,9 @@ const appReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(setActiveCard, (state, action) => {
     state.activeCardId = action.payload;
+  });
+  builder.addCase(setSortFilterType, (state, action) => {
+    state.sortedType = action.payload;
   });
 });
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import FilterBar from '../filter-bar/filter-bar';
 import Header from '../header/header';
 import CardList from '../card-list/card-list';
@@ -6,17 +6,22 @@ import CardSorting from '../card-sorting/card-sorting';
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffersList} from '../../store/api-actions';
+import {sortOffersFunc} from '../../utils';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {changeCity} from '../../store/action';
 import {getOffersByCity} from '../../utils';
 
 const MainPage = () => {
-  const {currentCity, activeCardId} = useSelector((state) => state.APP);
-  const {isOffersLoaded} = useSelector((state) => state.DATA);
-  const {offers} = useSelector((state) => state.DATA);
+  const {currentCity, activeCardId, sortedType} = useSelector((state) => state.APP);
+  const {offers, isOffersLoaded} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
+
+  const sortedOffers = useMemo(() => sortOffersFunc(offers, sortedType), [offers, sortedType]);
+  let cityOffers = useMemo(() => getOffersByCity(currentCity, sortedOffers), [currentCity, sortedOffers]);
+
+  const handleCityChange = (city) => dispatch(changeCity(city));
 
   useEffect(() => {
     if (!isOffersLoaded) {
@@ -30,10 +35,6 @@ const MainPage = () => {
       <LoadingScreen />
     );
   }
-
-  let cityOffers = getOffersByCity(currentCity, offers);
-
-  const handleCityChange = (city) => dispatch(changeCity(city));
 
   return (
     <React.Fragment>
