@@ -4,6 +4,7 @@ export const ActionType = {
   CHANGE_CITY: `app/changeCity`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
   SET_ACTIVE_CARD: `app/setActiveCard`,
+  SET_SORTED_FILTER_TYPE: `app/setSortFilterType`,
   SET_OFFERS: `data/setOffers`,
   SET_NEAR_BY_OFFERS: `data/setNearByOffers`,
   SET_COMMENTS: `data/setComments`,
@@ -15,6 +16,12 @@ export const ActionType = {
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => {
   return {
     payload: city
+  };
+});
+
+export const setSortFilterType = createAction(ActionType.SET_SORTED_FILTER_TYPE, (type) => {
+  return {
+    payload: type
   };
 });
 
