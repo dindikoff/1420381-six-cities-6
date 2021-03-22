@@ -18,7 +18,7 @@ const Card = ({card, onActivityChange, cardClassName, cardImageWrapperClassName,
   };
 
   const handleCardMouseLeave = () => {
-    onActivityChange(``);
+    onActivityChange(-1);
   };
 
   return (
