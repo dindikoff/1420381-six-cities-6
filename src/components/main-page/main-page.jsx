@@ -15,8 +15,8 @@ const MainPage = () => {
   const {offers} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
-  const sortedOffers = sortOffersFunc(offers, sortedType);
 
+  const sortedOffers = useMemo(() => sortOffersFunc(offers, sortedType), [offers, sortedType]);
   let cityOffers = useMemo(() => getOffersByCity(currentCity, sortedOffers), [currentCity, sortedOffers]);
 
   const handleCityChange = (city) => dispatch(changeCity(city));

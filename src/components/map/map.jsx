@@ -7,18 +7,23 @@ import {OfferType} from '../../typings/offer';
 
 import "leaflet/dist/leaflet.css";
 
+const PIN_IMAGE = {
+  inactive: `img/pin.svg`,
+  active: `img/pin-active.svg`
+};
+
 const Map = ({currentCity, offers, activeCardId}) => {
   const mapRef = useRef();
   const leafletMapRef = useRef();
   const markerLayers = useRef([]);
 
   const icon = leaflet.icon({
-    iconUrl: `img/pin.svg`,
+    iconUrl: PIN_IMAGE.inactive,
     iconSize: [30, 30]
   });
 
   const iconActive = leaflet.icon({
-    iconUrl: `img/pin-active.svg`,
+    iconUrl: PIN_IMAGE.active,
     iconSize: [30, 30]
   });
 
@@ -62,15 +67,15 @@ const Map = ({currentCity, offers, activeCardId}) => {
   }, [offers]);
 
   useEffect(() => {
+    const newActiveOffer = offers.find((offer) => offer.id === activeCardId);
+
     markerLayers.current.forEach((markerLayer) => {
       const {lat, lng} = markerLayer.getLatLng();
       const {iconUrl} = markerLayer.getIcon().options;
 
-      if (iconUrl === `img/pin-active.svg`) {
+      if (iconUrl === PIN_IMAGE.active) {
         markerLayer.setIcon(icon);
       }
-
-      const newActiveOffer = offers.find((offer) => offer.id === activeCardId);
 
       if (newActiveOffer && newActiveOffer.location.latitude === lat && newActiveOffer.location.longitude === lng) {
         markerLayer.setIcon(iconActive);

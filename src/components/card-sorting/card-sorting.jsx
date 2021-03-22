@@ -1,22 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {SortingOption} from '../../const';
 import {setSortFilterType} from '../../store/action';
 
 const CardSorting = () => {
-  const [initialOffers, setInitialOffers] = useState([]);
   const [optionState, setOptionState] = useState(false);
-
-  const {offers} = useSelector((state) => state.DATA);
   const {sortedType} = useSelector((state) => state.APP);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (initialOffers.length === 0) {
-      setInitialOffers(offers);
-    }
-  });
 
   const handleOpenedFilter = () => {
     setOptionState(!optionState);
