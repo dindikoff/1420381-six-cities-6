@@ -4,23 +4,23 @@ const COMMENT_LENGTH = {
 };
 
 const ratingValidation = (ratingNumber) => {
-  if (ratingNumber <= 0) {
-    return `Rating is required`;
+  if (!ratingNumber) {
+    return false;
   }
 
-  return null;
+  return true;
 };
 
 const commentTextValidation = (text) => {
   if (text.length < COMMENT_LENGTH.MIN) {
-    return `Comment must be greater than 50`;
+    return false;
   }
 
   if (text.length > COMMENT_LENGTH.MAX) {
-    return `Comment must be greater than 500`;
+    return false;
   }
 
-  return null;
+  return true;
 };
 
 export const validate = {

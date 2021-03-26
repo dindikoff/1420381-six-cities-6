@@ -4,172 +4,87 @@ import {useDispatch} from 'react-redux';
 import {sendComment} from '../../store/api-actions';
 import {validate} from '../../validation';
 
-import '../../shake.css';
+import './shake.css';
 
 const CommentForm = ({id}) => {
+
+  const STARS_COUNT = 5;
+  const RATING_TITLE = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
+
   const [values, setValues] = useState({
     rating: 0,
     review: ``
   });
-  const [errors, setErrors] = useState({});
-  const [isServerError, setServerError] = useState(false);
-  const [touched, setTouched] = useState({
+
+  const [isValid, setValidation] = useState({
     rating: false,
     review: false
   });
-  const [formDisabledStatus, setFormDisabledStatus] = useState(true);
+
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
 
-  const resetStates = () => {
-    setValues({
-      rating: 0,
-      review: ``
-    });
-    setErrors({});
-    setTouched({
-      rating: false,
-      review: false
-    });
-    setFormDisabledStatus(true);
-  };
-
-  const validateForm = () => {
-    const formValidation = Object.keys(values).reduce(
-        (acc, key) => {
-          const newError = validate[key](values[key]);
-          const newTouched = {[key]: true};
-          return {
-            errors: {
-              ...acc.errors,
-              ...(newError && {[key]: newError}),
-            },
-            touched: {
-              ...acc.touched,
-              ...newTouched,
-            },
-          };
-        },
-        {
-          errors: {...errors},
-          touched: {...touched},
-        },
-    );
-    setErrors(formValidation.errors);
-    setTouched(formValidation.touched);
-    setServerError(false);
-  };
-
-  const isFormValid = () => {
-    if (
-      !Object.values(errors).length &&
-      Object.values(touched).length ===
-        Object.values(values).length &&
-      Object.values(touched).every((fieldTouched) => {
-        return fieldTouched === true;
-      })
-    ) {
-      return true;
-    }
-
-    return false;
-  };
-
   const handleChange = (evt) => {
-    const {name, value: newValue} = evt.target;
-    const error = validate[name](newValue);
+    const {name, value} = evt.target;
 
     setValues({
       ...values,
-      [name]: newValue,
+      [name]: value
     });
 
-    setTouched({
-      ...touched,
-      [name]: true,
+    setValidation({
+      ...isValid,
+      [name]: validate[name](value)
     });
-
-    setErrors({
-      ...(error && {[name]: touched[name] && error}),
-    });
-
-    if (isFormValid()) {
-      setFormDisabledStatus(false);
-    } else {
-      setFormDisabledStatus(true);
-    }
   };
 
-  const handleOnSubmitForm = (evt) => {
+  const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    evt.persist();
+    setError(false);
 
-    validateForm();
-
-    if (isFormValid()) {
+    if (isValid.review && isValid.rating) {
       dispatch(sendComment({
         id,
         rating: values.rating,
         comment: values.review,
       }))
       .then(() => {
-        resetStates();
-        evt.target.reset();
+        setValues({rating: null, review: ``});
       })
       .catch(() => {
-        setServerError(true);
+        setError(true);
       });
     }
   };
 
   return (
-    <form className={`reviews__form form ${isServerError ? `formError` : ``}`} action="#" method="post" onSubmit={handleOnSubmitForm} onChange={handleChange}>
+    <form className={`reviews__form form ${error ? `form--error` : ``}`} action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden"
-          name="rating" defaultValue={5} id="5-stars" type="radio"/>
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={4} id="4-stars" type="radio" />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={3} id="3-stars" type="radio" />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={2} id="2-stars" type="radio" />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={1} id="1-star" type="radio" />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
+        {new Array(STARS_COUNT).fill().map((_, i) => {
+          return (
+            <React.Fragment key={i}>
+              <input onChange={handleChange} checked={parseInt(values.rating, 10) === i + 1} className="form__rating-input visually-hidden"
+                name="rating" value={i + 1} id={`${i + 1}-stars`} type="radio"/>
+              <label htmlFor={`${i + 1}-stars`} className="reviews__rating-label form__rating-label" title={RATING_TITLE[i]}>
+                <svg className="form__star-image" width={37} height={33}>
+                  <use xlinkHref="#icon-star" />
+                </svg>
+              </label>
+            </React.Fragment>
+          );
+        }).reverse()}
       </div>
 
-      <textarea maxLength={300} minLength={50} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={``}/>
+      <textarea maxLength={300} minLength={50} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleChange} value={values.review}/>
       <div>
-        <p color="red">
-          {errors.rating || isServerError ? `CHECK YOUR INTERNET CONNECTION` : ``}
-        </p>
       </div>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={formDisabledStatus}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isValid.rating && isValid.review ? false : true}>Submit</button>
       </div>
     </form>
   );
