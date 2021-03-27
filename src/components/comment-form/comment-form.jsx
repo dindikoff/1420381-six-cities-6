@@ -4,70 +4,71 @@ import {useDispatch} from 'react-redux';
 import {sendComment} from '../../store/api-actions';
 import {validate} from '../../validation';
 
-import './shake.css';
+import './comment-form.css';
+
+const STARS_COUNT = 5;
+const STARS_ARRAY = [...Array(STARS_COUNT + 1).keys()].slice(1);
+const RATING_TITLE = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
 
 const CommentForm = ({id}) => {
-
-  const STARS_COUNT = 5;
-  const RATING_TITLE = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
-
   const [values, setValues] = useState({
-    rating: 0,
+    rating: undefined,
     review: ``
   });
 
-  const [isValid, setValidation] = useState({
-    rating: false,
-    review: false
-  });
+  const isRatingValid = validate.rating(values.rating);
+  const isReviewValid = validate.review(values.review);
+  const isFormValid = isRatingValid && isReviewValid;
 
-  const [error, setError] = useState(false);
+  const [hasServerError, setHasServerError] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleChange = (evt) => {
-    const {name, value} = evt.target;
-
+  const handleRatingChange = (evt) => {
     setValues({
       ...values,
-      [name]: value
+      rating: parseInt(evt.target.value, 10)
     });
+  };
 
-    setValidation({
-      ...isValid,
-      [name]: validate[name](value)
+  const handleReviewChange = (evt) => {
+    setValues({
+      ...values,
+      review: evt.target.value
     });
   };
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    setError(false);
+    setHasServerError(false);
 
-    if (isValid.review && isValid.rating) {
+    if (isFormValid) {
       dispatch(sendComment({
         id,
         rating: values.rating,
         comment: values.review,
       }))
       .then(() => {
-        setValues({rating: null, review: ``});
+        setValues({rating: undefined, review: ``});
       })
       .catch(() => {
-        setError(true);
+        setHasServerError(true);
       });
     }
   };
 
   return (
-    <form className={`reviews__form form ${error ? `form--error` : ``}`} action="#" method="post" onSubmit={handleFormSubmit}>
+    <form className={`reviews__form form ${hasServerError ? `form--error` : ``}`} action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {new Array(STARS_COUNT).fill().map((_, i) => {
+        {STARS_ARRAY.map((starValue) => {
+          const starId = `${starValue}-stars`;
+
           return (
-            <React.Fragment key={i}>
-              <input onChange={handleChange} checked={parseInt(values.rating, 10) === i + 1} className="form__rating-input visually-hidden"
-                name="rating" value={i + 1} id={`${i + 1}-stars`} type="radio"/>
-              <label htmlFor={`${i + 1}-stars`} className="reviews__rating-label form__rating-label" title={RATING_TITLE[i]}>
+            <React.Fragment key={starId}>
+              <input onChange={handleRatingChange} checked={values.rating === starValue} className="form__rating-input visually-hidden"
+                name="rating" value={starValue} id={starId} type="radio"/>
+              <label htmlFor={starId} className="reviews__rating-label form__rating-label" title={RATING_TITLE[starValue - 1]}>
                 <svg className="form__star-image" width={37} height={33}>
                   <use xlinkHref="#icon-star" />
                 </svg>
@@ -77,14 +78,13 @@ const CommentForm = ({id}) => {
         }).reverse()}
       </div>
 
-      <textarea maxLength={300} minLength={50} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleChange} value={values.review}/>
-      <div>
-      </div>
+      <textarea maxLength={300} minLength={50} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleReviewChange} value={values.review}/>
+      {hasServerError && <div>Something went wrong =(</div>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isValid.rating && isValid.review ? false : true}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isFormValid}>Submit</button>
       </div>
     </form>
   );
