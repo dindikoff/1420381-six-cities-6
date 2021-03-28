@@ -47,3 +47,4 @@ export const adaptCommentToClient = (serverComment) => {
     }
   };
 };
+

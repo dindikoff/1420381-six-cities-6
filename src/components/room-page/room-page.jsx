@@ -4,25 +4,41 @@ import Header from '../header/header';
 import CommentsList from '../comments-list/comments-list';
 import CardNearBy from '../card-nearby/card-nearby';
 import Page404 from '../page-404/page-404';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Map from '../map/map';
 import PropTypes from 'prop-types';
 import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
-import {fetchComments} from '../../store/api-actions';
 
-import {getMatchedOffer, getOffersByCity} from '../../utils';
+import {getMatchedOffer} from '../../utils';
+import {fetchOffer, fetchOffersNearBy, fetchComments} from '../../store/api-actions';
 
 
 const RoomPage = ({id}) => {
-  const {offers, comments} = useSelector((state) => state.DATA);
+  const {offers, oneOffer, comments, isOneOfferLoaded, nearByOffers} = useSelector((state) => state.DATA);
   const {currentCity} = useSelector((state) => state.APP);
-  const offer = getMatchedOffer(offers, id);
-  const cityOffers = getOffersByCity(currentCity, offers);
+  const offer = offers.length === 0 ? getMatchedOffer(oneOffer, id) : getMatchedOffer(offers, id);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!isOneOfferLoaded) {
+      dispatch(fetchOffer(id));
+    }
+  }, [isOneOfferLoaded]);
+
+  useEffect(() => {
     dispatch(fetchComments(id));
   }, [id]);
+
+  useEffect(() => {
+    dispatch(fetchOffersNearBy(id));
+  }, [id]);
+
+  if (!isOneOfferLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   if (!offer) {
     return <Page404 />;
@@ -118,11 +134,11 @@ const RoomPage = ({id}) => {
                   </p>
                 </div>
               </div>
-              <CommentsList comments={comments}/>
+              <CommentsList comments={comments} id={id}/>
             </div>
           </div>
           <section className="property__map map">
-            <Map currentCity={currentCity} offers={cityOffers}/>
+            <Map currentCity={currentCity} offers={nearByOffers}/>
           </section>
         </section>
         <div className="container">

@@ -6,8 +6,10 @@ export const ActionType = {
   SET_ACTIVE_CARD: `app/setActiveCard`,
   SET_SORTED_FILTER_TYPE: `app/setSortFilterType`,
   SET_OFFERS: `data/setOffers`,
+  SET_ONE_OFFER: `data/setOneOffer`,
   SET_NEAR_BY_OFFERS: `data/setNearByOffers`,
   SET_COMMENTS: `data/setComments`,
+  SORT_OFFERS: `data/sortOffers`,
   SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
   SET_USER_INFO: `user/setUserInfo`,
 };
@@ -31,6 +33,18 @@ export const setActiveCard = createAction(ActionType.SET_ACTIVE_CARD, (cardId) =
 });
 
 export const setOffers = createAction(ActionType.SET_OFFERS, (offers) => {
+  return {
+    payload: offers
+  };
+});
+
+export const setOneOffer = createAction(ActionType.SET_ONE_OFFER, (offer) => {
+  return {
+    payload: offer
+  };
+});
+
+export const sortOffers = createAction(ActionType.SORT_OFFERS, (offers) => {
   return {
     payload: offers
   };

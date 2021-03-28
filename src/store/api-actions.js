@@ -1,4 +1,4 @@
-import {setAuthorizationStatus, setUserInfo, setComments, setOffers, redirectToRoute, setNearByOffers} from './action';
+import {setAuthorizationStatus, setUserInfo, setComments, setOffers, setOneOffer, redirectToRoute, setNearByOffers} from './action';
 import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
 import {AuthorizationStatus, ApiRoute} from '../const';
 
@@ -36,10 +36,26 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
     })
 );
 
+export const sendComment = ({id, rating, comment}) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.COMMENTS}${id}`, {rating, comment})
+    .then(({data}) => {
+      const adaptedData = data.map(adaptCommentToClient);
+      dispatch(setComments(adaptedData));
+    })
+);
+
 export const fetchOffersNearBy = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.OFFERS}${id}/nearby`)
     .then(({data}) => {
       const adaptedData = data.map((offer) => adaptOfferToClient(offer));
       dispatch(setNearByOffers(adaptedData));
     })
+);
+
+export const fetchOffer = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.OFFERS}${id}`)
+    .then(({data}) => {
+      const adaptedData = adaptOfferToClient(data);
+      dispatch(setOneOffer(new Array(adaptedData)));
+    }).catch(() => dispatch(redirectToRoute(`/page404/`)))
 );

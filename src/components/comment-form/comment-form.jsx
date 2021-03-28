@@ -1,66 +1,99 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
+import {sendComment} from '../../store/api-actions';
+import {validate} from '../../validation';
 
-const CommentForm = () => {
-  const [state, setState] = useState({
-    rating: 0,
-    text: ``
+import './comment-form.css';
+
+const CommentForm = ({id}) => {
+
+  const STARS_COUNT = 5;
+  const STARS_ARRAY = [...Array(STARS_COUNT + 1).keys()].slice(1);
+  const RATING_TITLE = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
+
+  const [values, setValues] = useState({
+    rating: undefined,
+    review: ``
   });
 
+  const [hasServerError, setHasServerError] = useState(false);
+
+  const isRatingValid = validate.rating(values.rating);
+  const isReviewValid = validate.review(values.review);
+  const isFormValid = isRatingValid && isReviewValid;
+
+  const dispatch = useDispatch();
+
   const handleRatingChange = (evt) => {
-    setState({...state, rating: evt.target.value});
+    setValues({
+      ...values,
+      rating: parseInt(evt.target.value, 10)
+    });
   };
 
-  const handleTextChange = (evt) => {
-    setState({...state, text: evt.target.value});
+  const handleReviewChange = (evt) => {
+    setValues({
+      ...values,
+      review: evt.target.value
+    });
+  };
+
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+    setHasServerError(false);
+
+    if (isFormValid) {
+      dispatch(sendComment({
+        id,
+        rating: values.rating,
+        comment: values.review,
+      }))
+      .then(() => {
+        setValues({rating: undefined, review: ``});
+      })
+      .catch(() => {
+        setHasServerError(true);
+      });
+    }
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={(evt) => {
-      evt.preventDefault();
-    }}>
+    <form className={`reviews__form form ${hasServerError ? `form--error` : ``}`} action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden"
-          name="rating" defaultValue={5} id="5-stars" type="radio" onChange={handleRatingChange}/>
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={4} id="4-stars" type="radio" onChange={handleRatingChange}/>
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={3} id="3-stars" type="radio" onChange={handleRatingChange}/>
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={2} id="2-stars" type="radio" onChange={handleRatingChange}/>
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input className="form__rating-input visually-hidden" name="rating" defaultValue={1} id="1-star" type="radio" onChange={handleRatingChange}/>
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
+        {STARS_ARRAY.map((starValue) => {
+          const starId = `${starValue}-stars`;
+          return (
+            <React.Fragment key={starId}>
+              <input onChange={handleRatingChange} checked={values.rating === starValue} className="form__rating-input visually-hidden"
+                name="rating" value={starValue} id={starId} type="radio"/>
+              <label htmlFor={starId} className="reviews__rating-label form__rating-label" title={RATING_TITLE[starValue - 1]}>
+                <svg className="form__star-image" width={37} height={33}>
+                  <use xlinkHref="#icon-star" />
+                </svg>
+              </label>
+            </React.Fragment>
+          );
+        }).reverse()}
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={``} onChange={handleTextChange}/>
+
+      <textarea maxLength={300} minLength={50} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleReviewChange} value={values.review}/>
+      {hasServerError && <div>Something went wrong =(</div>}
+      <div>
+      </div>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isFormValid ? false : true}>Submit</button>
       </div>
     </form>
   );
+};
+
+CommentForm.propTypes = {
+  id: PropTypes.number.isRequired
 };
 
 export default CommentForm;
