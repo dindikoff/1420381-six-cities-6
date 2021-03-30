@@ -4,12 +4,12 @@ import Header from '../header/header';
 import CardList from '../card-list/card-list';
 import CardSorting from '../card-sorting/card-sorting';
 import Map from '../map/map';
+import MainEmpty from '../main-empty/main-empty';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffersList} from '../../store/api-actions';
 import {sortOffersFunc} from '../../utils';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {changeCity} from '../../store/action';
 import {getOffersByCity} from '../../utils';
 
 const MainPage = () => {
@@ -21,7 +21,6 @@ const MainPage = () => {
   const sortedOffers = useMemo(() => sortOffersFunc(offers, sortedType), [offers, sortedType]);
   let cityOffers = useMemo(() => getOffersByCity(currentCity, sortedOffers), [currentCity, sortedOffers]);
 
-  const handleCityChange = (city) => dispatch(changeCity(city));
 
   useEffect(() => {
     if (!isOffersLoaded) {
@@ -36,13 +35,18 @@ const MainPage = () => {
     );
   }
 
+  if (cityOffers.length === 0) {
+    return (
+      <MainEmpty />
+    );
+  }
+
   return (
     <React.Fragment>
       <div className="page page--gray page--main">
         <Header />
         <main className="page__main page__main--index">
-          <h1 className="visually-hidden">Cities</h1>
-          <FilterBar onCityChange={handleCityChange} currentCity={currentCity}/>
+          <FilterBar />
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">

@@ -37,7 +37,8 @@ export const ApiRoute = {
   OFFERS: `/hotels/`,
   LOGIN: `/login/`,
   LOGOUT: `/logout/`,
-  COMMENTS: `/comments/`
+  COMMENTS: `/comments/`,
+  FAVORITE: `/favorite/`
 };
 
 export const SortingOption = {

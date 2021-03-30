@@ -1,14 +1,24 @@
-import React, {useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useRef, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Header from '../header/header';
 import {login} from '../../store/api-actions';
+import {redirectToRoute} from '../../store/action';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 const LoginPage = () => {
+
+  const {authorizationStatus} = useSelector((state) => state.USER);
 
   const loginRef = useRef();
   const passwordRef = useRef();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      dispatch(redirectToRoute(AppRoute.FAVORITES));
+    }
+  }, [authorizationStatus]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
