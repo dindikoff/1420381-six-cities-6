@@ -7,7 +7,10 @@ const FilterBar = () => {
   const {currentCity} = useSelector((state) => state.APP);
   const dispatch = useDispatch();
 
-  const handleCityChange = (city) => dispatch(changeCity(city));
+  const handleCityChange = (city, evt) => {
+    evt.preventDefault();
+    dispatch(changeCity(city));
+  };
 
   return (
     <React.Fragment>

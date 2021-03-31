@@ -1,7 +1,7 @@
 import {setOffers, setComments,
   setNearByOffers, sortOffers,
   setOneOffer, updateCardByFavoriteStatus,
-  setFavoriteOffers} from '../../action';
+  setFavoriteOffers, resetFavoriteStatus} from '../../action';
 import {createReducer} from '@reduxjs/toolkit';
 
 
@@ -32,6 +32,10 @@ const dataReducer = createReducer(initialState, (builder) => {
     state.isFavoriteOffersLoaded = true;
   });
 
+  builder.addCase(resetFavoriteStatus, (state, action) => {
+    state.isFavoriteOffersLoaded = action.payload;
+  });
+
   builder.addCase(setComments, (state, action) => {
     state.comments = action.payload;
   });
@@ -45,7 +49,6 @@ const dataReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(updateCardByFavoriteStatus, (state, action) => {
     state.offers = state.offers.map((offer) => (offer.id === action.payload.id) ? action.payload : offer);
-    // const getOffers = state.offers.map((offer) => (offer.id === action.payload.id) ? action.payload : offer)}
   });
 });
 

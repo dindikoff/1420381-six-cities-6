@@ -1,23 +1,21 @@
 import React, {useEffect} from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import FavoriteItems from '../favorite-items/favorite-items';
 import LoadingScreen from '../loading-screen/loading-screen';
-
+import FavoriteList from '../favorite-list/favorite-list';
+import FavoriteListEmpty from '../favorite-list-empty/favorite-list-empty';
 import {useSelector, useDispatch} from 'react-redux';
-
 import {fetchFavoriteCards} from '../../store/api-actions';
 
 const FavoritesPage = () => {
-
   const {favoriteOffers, isFavoriteOffersLoaded} = useSelector((state) => state.DATA);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isFavoriteOffersLoaded) {
       dispatch(fetchFavoriteCards());
     }
+
   }, [isFavoriteOffersLoaded]);
 
   if (!isFavoriteOffersLoaded) {
@@ -26,19 +24,14 @@ const FavoritesPage = () => {
     );
   }
 
-  const getCities = [...new Set(favoriteOffers.map((o) => o.city.name))];
-
   return (
     <React.Fragment>
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {getCities.map((city) => <FavoriteItems key={city} city={city} favoriteCards={favoriteOffers} />)}
-            </ul>
-          </section>
+          {favoriteOffers.length !== 0 ?
+            <FavoriteList/>
+            : <FavoriteListEmpty/>}
         </div>
       </main>
 

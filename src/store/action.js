@@ -12,6 +12,7 @@ export const ActionType = {
   SORT_OFFERS: `data/sortOffers`,
   SET_FAVORITE_OFFERS: `data/setFavoriteOffers`,
   UPDATE_CARD_BY_FAVORITE_STATUS: `data/updateCardByFavoriteStatus`,
+  RESET_FAVORITE_STATUS: `data/resetFavoriteStatus`,
   SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
   SET_USER_INFO: `user/setUserInfo`,
 };
@@ -19,6 +20,12 @@ export const ActionType = {
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => {
   return {
     payload: city
+  };
+});
+
+export const resetFavoriteStatus = createAction(ActionType.RESET_FAVORITE_STATUS, () => {
+  return {
+    payload: false
   };
 });
 
