@@ -7,9 +7,7 @@ import {createReducer} from '@reduxjs/toolkit';
 
 const initialState = {
   offers: [],
-  oneOffer: [],
   nearByOffers: [],
-  favoriteOffers: [],
   isFavoriteOffersLoaded: false,
   isOffersLoaded: false,
   isOneOfferLoaded: false,
@@ -23,12 +21,12 @@ const dataReducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(setOneOffer, (state, action) => {
-    state.oneOffer = action.payload;
+    state.offers = action.payload;
     state.isOneOfferLoaded = true;
   });
 
   builder.addCase(setFavoriteOffers, (state, action) => {
-    state.favoriteOffers = action.payload;
+    state.offers = action.payload;
     state.isFavoriteOffersLoaded = true;
   });
 
@@ -45,8 +43,6 @@ const dataReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(updateCardByFavoriteStatus, (state, action) => {
     state.offers = state.offers.map((offer) => (offer.id === action.payload.id) ? action.payload : offer);
-    state.favoriteOffers = state.favoriteOffers.map((offer) => (offer.id === action.payload.id) ? action.payload : offer);
-    state.oneOffer = [action.payload];
   });
 });
 

@@ -14,18 +14,19 @@ import {fetchOffer, fetchOffersNearBy, fetchComments} from '../../store/api-acti
 
 
 const RoomPage = ({id}) => {
-  const {offers, oneOffer, comments, isOneOfferLoaded, nearByOffers} = useSelector((state) => state.DATA);
+  const {offers, comments, isOneOfferLoaded, nearByOffers} = useSelector((state) => state.DATA);
   const {currentCity} = useSelector((state) => state.APP);
-  const offer = offers.length === 0 ? getMatchedOffer(oneOffer, id) : getMatchedOffer(offers, id);
+  const isOffersEmpty = offers.length === 0 || undefined;
+  const offer = getMatchedOffer(offers, id);
   const [handleFavoriteButtonClick] = useFavoriteButtonHandler(id, offer ? offer.isFavorite : false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isOneOfferLoaded) {
+    if (isOffersEmpty && !isOneOfferLoaded) {
       dispatch(fetchOffer(id));
     }
-  }, [isOneOfferLoaded]);
+  }, [offers, isOneOfferLoaded]);
 
   useEffect(() => {
     dispatch(fetchComments(id));
@@ -35,7 +36,7 @@ const RoomPage = ({id}) => {
     dispatch(fetchOffersNearBy(id));
   }, [id]);
 
-  if (!isOneOfferLoaded) {
+  if (isOffersEmpty && !isOneOfferLoaded) {
     return (
       <LoadingScreen />
     );

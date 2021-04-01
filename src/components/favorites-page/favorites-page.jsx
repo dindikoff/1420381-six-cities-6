@@ -8,23 +8,21 @@ import {useSelector, useDispatch} from 'react-redux';
 import {fetchFavoriteCards} from '../../store/api-actions';
 
 const FavoritesPage = () => {
-  const {offers, favoriteOffers, isFavoriteOffersLoaded} = useSelector((state) => state.DATA);
+  const {offers, isFavoriteOffersLoaded} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
+  const isOffersEmpty = offers.length === 0 || undefined;
 
-  const favoriteList = offers.length === 0 ?
-    favoriteOffers.filter((favorite) => favorite.isFavorite) :
-    offers.filter((offer) => offer.isFavorite);
-
+  const favoriteList = offers.filter((offer) => offer.isFavorite);
   const getCities = [...new Set(favoriteList.map((o) => o.city.name))];
 
   useEffect(() => {
-    if (!isFavoriteOffersLoaded) {
+    if (!isFavoriteOffersLoaded && isOffersEmpty) {
       dispatch(fetchFavoriteCards());
     }
 
-  }, [isFavoriteOffersLoaded]);
+  }, [isFavoriteOffersLoaded, offers]);
 
-  if (!isFavoriteOffersLoaded) {
+  if (!isFavoriteOffersLoaded && isOffersEmpty) {
     return (
       <LoadingScreen />
     );
