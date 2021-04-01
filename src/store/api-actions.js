@@ -2,7 +2,7 @@ import {setAuthorizationStatus, setUserInfo,
   setComments, setOffers,
   setOneOffer, redirectToRoute,
   setNearByOffers, updateCardByFavoriteStatus,
-  setFavoriteOffers, resetFavoriteStatus} from './action';
+  setFavoriteOffers} from './action';
 import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
 import {AuthorizationStatus, ApiRoute} from '../const';
 
@@ -68,7 +68,6 @@ export const changeFavoriteStatus = (id, status) => (dispatch, _getState, api) =
   api.post(`${ApiRoute.FAVORITE}${id}/${status}`)
   .then(({data}) => {
     const adaptedData = adaptOfferToClient(data);
-    dispatch(resetFavoriteStatus());
     dispatch(updateCardByFavoriteStatus(adaptedData));
   });
 };
