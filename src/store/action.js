@@ -10,6 +10,8 @@ export const ActionType = {
   SET_NEAR_BY_OFFERS: `data/setNearByOffers`,
   SET_COMMENTS: `data/setComments`,
   SORT_OFFERS: `data/sortOffers`,
+  SET_FAVORITE_OFFERS: `data/setFavoriteOffers`,
+  UPDATE_CARD_BY_FAVORITE_STATUS: `data/updateCardByFavoriteStatus`,
   SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
   SET_USER_INFO: `user/setUserInfo`,
 };
@@ -20,9 +22,21 @@ export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => {
   };
 });
 
+export const updateCardByFavoriteStatus = createAction(ActionType.UPDATE_CARD_BY_FAVORITE_STATUS, (offer) => {
+  return {
+    payload: offer
+  };
+});
+
 export const setSortFilterType = createAction(ActionType.SET_SORTED_FILTER_TYPE, (type) => {
   return {
     payload: type
+  };
+});
+
+export const setFavoriteOffers = createAction(ActionType.SET_FAVORITE_OFFERS, (offers) => {
+  return {
+    payload: offers
   };
 });
 

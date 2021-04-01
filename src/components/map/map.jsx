@@ -82,7 +82,7 @@ const Map = ({currentCity, offers, activeCardId}) => {
       }
     });
 
-  }, [activeCardId]);
+  }, [activeCardId, offers]);
 
   return (
     <div id="map" style={{height: `100%`}} ref={mapRef}></div>

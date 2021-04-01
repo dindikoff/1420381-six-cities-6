@@ -1,4 +1,8 @@
-import {setAuthorizationStatus, setUserInfo, setComments, setOffers, setOneOffer, redirectToRoute, setNearByOffers} from './action';
+import {setAuthorizationStatus, setUserInfo,
+  setComments, setOffers,
+  setOneOffer, redirectToRoute,
+  setNearByOffers, updateCardByFavoriteStatus,
+  setFavoriteOffers} from './action';
 import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
 import {AuthorizationStatus, ApiRoute} from '../const';
 
@@ -58,4 +62,20 @@ export const fetchOffer = (id) => (dispatch, _getState, api) => (
       const adaptedData = adaptOfferToClient(data);
       dispatch(setOneOffer(new Array(adaptedData)));
     }).catch(() => dispatch(redirectToRoute(`/page404/`)))
+);
+
+export const changeFavoriteStatus = (id, status) => (dispatch, _getState, api) => {
+  api.post(`${ApiRoute.FAVORITE}${id}/${status}`)
+  .then(({data}) => {
+    const adaptedData = adaptOfferToClient(data);
+    dispatch(updateCardByFavoriteStatus(adaptedData));
+  });
+};
+
+export const fetchFavoriteCards = () => (dispatch, _getState, api) => (
+  api.get(ApiRoute.FAVORITE)
+    .then(({data}) => {
+      const adaptedData = data.map((offer) => adaptOfferToClient(offer));
+      dispatch(setFavoriteOffers(adaptedData));
+    })
 );
