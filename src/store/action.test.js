@@ -130,8 +130,8 @@ const userInfo = {
   id: 1,
   email: `savandex@gmail.com`,
   name: `savandex`,
-  avatar_url: `https://assets.htmlacademy.ru…tar/5.jpg`,
-  is_pro: false
+  avatarUrl: `https://assets.htmlacademy.ru…tar/5.jpg`,
+  isPro: false
 };
 
 const comments = [
@@ -148,8 +148,8 @@ const comments = [
     rating: 4
   },
   {
-    text: "Beautiful space, fantastic location and atmosphere, really a wonderful place to spend a few days. Will be back.",
-    date: "2021-02-10T08:04:28.647Z",
+    text: `Beautiful space, fantastic location and atmosphere, really a wonderful place to spend a few days. Will be back.`,
+    date: `2021-02-10T08:04:28.647Z`,
     id: 3,
     rating: 1
   }
