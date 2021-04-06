@@ -3,13 +3,13 @@ const COMMENT_LENGTH = {
   MIN: 50
 };
 
-const ratingValidation = (ratingNumber) => Boolean(ratingNumber);
+const checkRatingValidation = (ratingNumber) => Boolean(ratingNumber);
 
-const commentTextValidation = (text) => {
+const checkCommentTextValidation = (text) => {
   return text.length >= COMMENT_LENGTH.MIN && text.length <= COMMENT_LENGTH.MAX;
 };
 
 export const validate = {
-  rating: ratingValidation,
-  review: commentTextValidation,
+  rating: checkRatingValidation,
+  review: checkCommentTextValidation,
 };

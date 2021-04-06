@@ -9,8 +9,8 @@ import './comment-form.css';
 const CommentForm = ({id}) => {
 
   const STARS_COUNT = 5;
-  const STARS_ARRAY = [...Array(STARS_COUNT + 1).keys()].slice(1);
-  const RATING_TITLE = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
+  const StarList = [...Array(STARS_COUNT + 1).keys()].slice(1);
+  const RatingTitles = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
 
   const [values, setValues] = useState({
     rating: undefined,
@@ -62,13 +62,13 @@ const CommentForm = ({id}) => {
     <form className={`reviews__form form ${hasServerError ? `form--error` : ``}`} action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {STARS_ARRAY.map((starValue) => {
+        {StarList.map((starValue) => {
           const starId = `${starValue}-stars`;
           return (
             <React.Fragment key={starId}>
               <input onChange={handleRatingChange} checked={values.rating === starValue} className="form__rating-input visually-hidden"
                 name="rating" value={starValue} id={starId} type="radio"/>
-              <label htmlFor={starId} className="reviews__rating-label form__rating-label" title={RATING_TITLE[starValue - 1]}>
+              <label htmlFor={starId} className="reviews__rating-label form__rating-label" title={RatingTitles[starValue - 1]}>
                 <svg className="form__star-image" width={37} height={33}>
                   <use xlinkHref="#icon-star" />
                 </svg>

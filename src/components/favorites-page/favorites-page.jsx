@@ -15,7 +15,7 @@ const FavoritesPage = () => {
     favoriteOffers.filter((favorite) => favorite.isFavorite) :
     offers.filter((offer) => offer.isFavorite);
 
-  const getCities = [...new Set(getFavorite.map((o) => o.city.name))];
+  const favoriteCities = [...new Set(getFavorite.map((o) => o.city.name))];
 
   useEffect(() => {
     if (!isFavoriteOffersLoaded) {
@@ -36,7 +36,7 @@ const FavoritesPage = () => {
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           {getFavorite.length !== 0 ?
-            <FavoriteList getCities={getCities} getFavorite={getFavorite}/>
+            <FavoriteList favoriteCities={favoriteCities} getFavorite={getFavorite}/>
             : <FavoriteListEmpty/>}
         </div>
       </main>

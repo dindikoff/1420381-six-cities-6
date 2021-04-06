@@ -10,10 +10,6 @@ export const CITY_CORDS = {
 
 export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
-export const FEATURES = [`Heating`, `Kitchen`,
-  `Cable TV`, `Washing machine`,
-  `Coffee machine`, `Dishwasher`];
-
 export const ROOM_TYPE_TO_ROOM_NAME = {
   apartment: `Apartment`,
   room: `Private Room`,
