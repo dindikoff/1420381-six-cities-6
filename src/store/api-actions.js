@@ -1,10 +1,10 @@
-import {setAuthorizationStatus, setUserInfo,
+import {setUserInfo,
   setComments, setOffers,
   setOneOffer, redirectToRoute,
   setNearByOffers, updateCardByFavoriteStatus,
   setFavoriteOffers} from './action';
 import {adaptOfferToClient, adaptCommentToClient} from '../services/adapter';
-import {AuthorizationStatus, ApiRoute} from '../const';
+import {ApiRoute} from '../const';
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.OFFERS)
@@ -17,7 +17,6 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 export const getUserData = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(({data}) => {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
       dispatch(setUserInfo(data));
     })
     .catch(() => {})
@@ -25,11 +24,8 @@ export const getUserData = () => (dispatch, _getState, api) => (
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(ApiRoute.LOGIN, {email, password})
-    .then(({data}) => {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
-      dispatch(setUserInfo(data));
-    })
-    .then(() => dispatch(redirectToRoute(`/`)))
+    .then(({data}) => dispatch(setUserInfo(data)))
+    .then(() => dispatch(redirectToRoute(ApiRoute.MAIN)))
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (

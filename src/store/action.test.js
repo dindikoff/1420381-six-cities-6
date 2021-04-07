@@ -2,7 +2,7 @@ import {changeCity, updateCardByFavoriteStatus,
   setSortFilterType, setFavoriteOffers,
   setActiveCard, setOffers,
   setOneOffer, sortOffers,
-  setNearByOffers, setAuthorizationStatus,
+  setNearByOffers,
   setUserInfo, redirectToRoute,
   setComments, ActionType} from './action';
 
@@ -237,14 +237,14 @@ describe(`Action creators should work correctly`, () => {
     expect(setNearByOffers(offers)).toEqual(expectedAction);
   });
 
-  it(`Action Creator for set authorization status returns correct action`, () => {
-    const expectedAction = {
-      type: ActionType.SET_AUTHORIZATION_STATUS,
-      payload: `NO_AUTH`
-    };
+  // it(`Action Creator for set authorization status returns correct action`, () => {
+  //   const expectedAction = {
+  //     type: ActionType.SET_AUTHORIZATION_STATUS,
+  //     payload: `NO_AUTH`
+  //   };
 
-    expect(setAuthorizationStatus(`NO_AUTH`)).toEqual(expectedAction);
-  });
+  //   expect(setAuthorizationStatus(`NO_AUTH`)).toEqual(expectedAction);
+  // });
 
   it(`Action Creator for set user info`, () => {
     const expectedAction = {

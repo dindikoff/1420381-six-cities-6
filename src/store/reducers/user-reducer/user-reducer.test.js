@@ -1,6 +1,11 @@
+import MockAdapter from 'axios-mock-adapter';
+import {createApi} from '../../../services/api';
 import {ActionType} from '../../action';
+import {getUserData, login} from '../../api-actions';
 import {userReducer} from './user-reducer';
-import {AuthorizationStatus} from '../../../const';
+import {ApiRoute, AuthorizationStatus} from '../../../const';
+
+const api = createApi(() => {});
 
 const state = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -20,27 +25,66 @@ describe(`User Reducer works correctly`, () => {
     expect(userReducer(undefined, {})).toEqual(state);
   });
 
-  it(`Reducer should change auth status`, () => {
-    const changeAuthStatus = {
-      type: ActionType.SET_AUTHORIZATION_STATUS,
-      payload: AuthorizationStatus.AUTH
-    };
-
-    expect(userReducer(state, changeAuthStatus)).toEqual({
-      authorizationStatus: AuthorizationStatus.AUTH,
-      userInfo: {},
-    });
-  });
-
-  it(`Reducer should set user info`, () => {
+  it(`Reducer should set user info and auth status`, () => {
     const setUserInfo = {
       type: ActionType.SET_USER_INFO,
       payload: userInfo
     };
 
     expect(userReducer(state, setUserInfo)).toEqual({
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
-      userInfo
+      authorizationStatus: AuthorizationStatus.AUTH,
+      userInfo: {
+        id: 1,
+        email: `savandex@gmail.com`,
+        name: `savandex`,
+        avatarUrl: `https://assets.htmlacademy.ru…tar/5.jpg`,
+        isPro: false
+      }
     });
+  });
+});
+
+describe(`Async operation work correctly`, () => {
+  it(`Should make a correct API call to /login (getInfo)`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const getUserInfoLoader = getUserData();
+
+    apiMock.onGet(ApiRoute.LOGIN).reply(200, [userInfo]);
+
+    return getUserInfoLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.SET_USER_INFO,
+          payload: [userInfo]
+        });
+      });
+  });
+
+  it(`Should make a correct API call to /login (auth)`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fakeUser = {email: `test@test.ru`, password: `123`};
+    const loginLoader = login(fakeUser);
+
+    apiMock
+      .onPost(ApiRoute.LOGIN)
+      .reply(200, [userInfo]);
+
+    return loginLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.SET_USER_INFO,
+          payload: [userInfo]
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.REDIRECT_TO_ROUTE,
+          payload: ApiRoute.MAIN
+        });
+      });
   });
 });
