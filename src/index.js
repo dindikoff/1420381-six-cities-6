@@ -6,13 +6,11 @@ import {createApi} from "./services/api";
 
 import {Provider} from 'react-redux';
 import {rootReducer} from './store/reducers/root-reducer';
-import {AuthorizationStatus} from './const';
 
 import App from './components/app/app';
-import {setAuthorizationStatus} from './store/action';
 import {getUserData} from './store/api-actions';
 
-const api = createApi(() => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH)));
+const api = createApi();
 
 const store = configureStore({
   reducer: rootReducer,

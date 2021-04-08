@@ -14,6 +14,22 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
     })
 );
 
+export const fetchOffersNearBy = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.OFFERS}${id}/nearby`)
+    .then(({data}) => {
+      const adaptedData = data.map((offer) => adaptOfferToClient(offer));
+      dispatch(setNearByOffers(adaptedData));
+    })
+);
+
+export const fetchOffer = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.OFFERS}${id}`)
+    .then(({data}) => {
+      const adaptedData = adaptOfferToClient(data);
+      dispatch(setOneOffer(new Array(adaptedData)));
+    }).catch(() => dispatch(redirectToRoute(`/page404/`)))
+);
+
 export const getUserData = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(({data}) => {
@@ -44,29 +60,13 @@ export const sendComment = ({id, rating, comment}) => (dispatch, _getState, api)
     })
 );
 
-export const fetchOffersNearBy = (id) => (dispatch, _getState, api) => (
-  api.get(`${ApiRoute.OFFERS}${id}/nearby`)
-    .then(({data}) => {
-      const adaptedData = data.map((offer) => adaptOfferToClient(offer));
-      dispatch(setNearByOffers(adaptedData));
-    })
-);
-
-export const fetchOffer = (id) => (dispatch, _getState, api) => (
-  api.get(`${ApiRoute.OFFERS}${id}`)
-    .then(({data}) => {
-      const adaptedData = adaptOfferToClient(data);
-      dispatch(setOneOffer(new Array(adaptedData)));
-    }).catch(() => dispatch(redirectToRoute(`/page404/`)))
-);
-
-export const changeFavoriteStatus = (id, status) => (dispatch, _getState, api) => {
+export const changeFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.FAVORITE}${id}/${status}`)
   .then(({data}) => {
     const adaptedData = adaptOfferToClient(data);
     dispatch(updateCardByFavoriteStatus(adaptedData));
-  });
-};
+  })
+);
 
 export const fetchFavoriteCards = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.FAVORITE)
