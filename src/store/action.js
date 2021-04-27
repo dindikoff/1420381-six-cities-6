@@ -12,7 +12,7 @@ export const ActionType = {
   SORT_OFFERS: `data/sortOffers`,
   SET_FAVORITE_OFFERS: `data/setFavoriteOffers`,
   UPDATE_CARD_BY_FAVORITE_STATUS: `data/updateCardByFavoriteStatus`,
-  SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
+  // SET_AUTHORIZATION_STATUS: `user/requiredAuthorization`,
   SET_USER_INFO: `user/setUserInfo`,
 };
 
@@ -67,12 +67,6 @@ export const sortOffers = createAction(ActionType.SORT_OFFERS, (offers) => {
 export const setNearByOffers = createAction(ActionType.SET_NEAR_BY_OFFERS, (offers) => {
   return {
     payload: offers
-  };
-});
-
-export const setAuthorizationStatus = createAction(ActionType.SET_AUTHORIZATION_STATUS, (status) => {
-  return {
-    payload: status
   };
 });
 

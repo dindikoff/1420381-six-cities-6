@@ -7,36 +7,41 @@ import Page404 from '../page-404/page-404';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Map from '../map/map';
 import PropTypes from 'prop-types';
-import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME, AppRoute, AuthorizationStatus} from '../../const';
-
+import {RATING_STAR_PERCENT, ROOM_TYPE_TO_ROOM_NAME} from '../../const';
+import {useFavoriteButtonHandler} from '../../hooks/use-favorite-button-handler';
 import {getMatchedOffer} from '../../utils';
-import {fetchOffer, fetchOffersNearBy, fetchComments, changeFavoriteStatus} from '../../store/api-actions';
-import {redirectToRoute} from '../../store/action';
+import {fetchOffer, fetchOffersNearBy, fetchComments} from '../../store/api-actions';
 
 
 const RoomPage = ({id}) => {
-  const {offers, oneOffer, comments, isOneOfferLoaded, nearByOffers} = useSelector((state) => state.DATA);
+  const {offers, comments, isOneOfferLoaded,
+    isCommentsLoaded, isOfferNearByLoaded, nearByOffers} = useSelector((state) => state.DATA);
   const {currentCity} = useSelector((state) => state.APP);
-  const {authorizationStatus} = useSelector((state) => state.USER);
-  const offer = offers.length === 0 ? getMatchedOffer(oneOffer, id) : getMatchedOffer(offers, id);
+  const isOffersEmpty = offers.length === 0 || undefined;
+  const offer = getMatchedOffer(offers, id);
+  const [handleFavoriteButtonClick] = useFavoriteButtonHandler(id, offer ? offer.isFavorite : false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isOneOfferLoaded) {
+    if (isOffersEmpty && !isOneOfferLoaded) {
       dispatch(fetchOffer(id));
     }
-  }, [isOneOfferLoaded]);
+  }, [offers, isOneOfferLoaded]);
 
   useEffect(() => {
-    dispatch(fetchComments(id));
+    if (!isCommentsLoaded) {
+      dispatch(fetchComments(id));
+    }
   }, [id]);
 
   useEffect(() => {
-    dispatch(fetchOffersNearBy(id));
+    if (!isOfferNearByLoaded) {
+      dispatch(fetchOffersNearBy(id));
+    }
   }, [id]);
 
-  if (!isOneOfferLoaded) {
+  if (isOffersEmpty && !isOneOfferLoaded) {
     return (
       <LoadingScreen />
     );
@@ -45,16 +50,6 @@ const RoomPage = ({id}) => {
   if (!offer) {
     return <Page404 />;
   }
-
-  const handleChangeFavoriteStatus = (evt) => {
-    evt.preventDefault();
-
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      dispatch(redirectToRoute(AppRoute.LOGIN));
-    } else {
-      dispatch(changeFavoriteStatus(id, offer.isFavorite ? 0 : 1));
-    }
-  };
 
   return (
     <React.Fragment>
@@ -82,7 +77,7 @@ const RoomPage = ({id}) => {
                 <h1 className="property__name">
                   {offer.name}
                 </h1>
-                <button onClick={handleChangeFavoriteStatus} className={offer.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`} type="button">
+                <button onClick={handleFavoriteButtonClick} className={offer.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`} type="button">
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>

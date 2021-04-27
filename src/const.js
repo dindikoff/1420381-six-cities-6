@@ -30,6 +30,7 @@ export const AppRoute = {
 };
 
 export const ApiRoute = {
+  MAIN: `/`,
   OFFERS: `/hotels/`,
   LOGIN: `/login/`,
   LOGOUT: `/logout/`,
