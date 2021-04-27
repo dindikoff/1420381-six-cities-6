@@ -14,7 +14,8 @@ import {fetchOffer, fetchOffersNearBy, fetchComments} from '../../store/api-acti
 
 
 const RoomPage = ({id}) => {
-  const {offers, comments, isOneOfferLoaded, nearByOffers} = useSelector((state) => state.DATA);
+  const {offers, comments, isOneOfferLoaded,
+    isCommentsLoaded, isOfferNearByLoaded, nearByOffers} = useSelector((state) => state.DATA);
   const {currentCity} = useSelector((state) => state.APP);
   const isOffersEmpty = offers.length === 0 || undefined;
   const offer = getMatchedOffer(offers, id);
@@ -29,11 +30,15 @@ const RoomPage = ({id}) => {
   }, [offers, isOneOfferLoaded]);
 
   useEffect(() => {
-    dispatch(fetchComments(id));
+    if (!isCommentsLoaded) {
+      dispatch(fetchComments(id));
+    }
   }, [id]);
 
   useEffect(() => {
-    dispatch(fetchOffersNearBy(id));
+    if (!isOfferNearByLoaded) {
+      dispatch(fetchOffersNearBy(id));
+    }
   }, [id]);
 
   if (isOffersEmpty && !isOneOfferLoaded) {

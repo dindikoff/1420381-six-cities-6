@@ -20,6 +20,8 @@ const state = {
   isFavoriteOffersLoaded: false,
   isOffersLoaded: false,
   isOneOfferLoaded: false,
+  isCommentsLoaded: false,
+  isOfferNearByLoaded: false,
   comments: [],
 };
 
@@ -346,7 +348,8 @@ describe(`Data Reducer works correctly`, () => {
 
     expect(dataReducer(state, setComments)).toEqual({
       ...state,
-      comments: serverComments
+      comments: serverComments,
+      isCommentsLoaded: true,
     });
   });
 
@@ -358,7 +361,8 @@ describe(`Data Reducer works correctly`, () => {
 
     expect(dataReducer(state, setNearbyOffers)).toEqual({
       ...state,
-      nearByOffers: offers
+      nearByOffers: offers,
+      isOfferNearByLoaded: true
     });
   });
 
