@@ -41,3 +41,4 @@ npm i react@16.12 -E
 * file-loader@6.2
 * css-loader@5.0
 * style-loader@2.0
+* nanoid
